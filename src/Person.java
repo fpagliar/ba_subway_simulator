@@ -13,6 +13,15 @@ public class Person implements SimulatorObject{
 	}
 
 	public void event(double timestamp){
+		
+	}
+	
+	public Station getDestiny(){
+		return destiny;
+	}
+	
+	public void descend(){
+		
 	}
 	
 }
