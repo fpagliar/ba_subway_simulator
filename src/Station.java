@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Station implements SimulatorObject {
 
+	//TODO: change list for queue
 	private List<Person> persons;
 	private Train train;
 	private BetweenStationSpace next;
@@ -23,6 +24,9 @@ public class Station implements SimulatorObject {
 		SimulatorScheduler.getInstance().registerEvent(last_arrival + descending_duration, this);
 	}
 	
+	public void personArrival(Person p){
+		persons.add(p);
+	}
 	
 	@Override
 	public void event(double timestamp) throws Exception {
@@ -31,6 +35,9 @@ public class Station implements SimulatorObject {
 				p.descend();
 				train.passangers.remove(p);
 			}
+		}
+		while(train.personEntering(persons.get(0))){
+			persons.remove(0);
 		}
 		next.trainArrival(train, timestamp);
 	}
