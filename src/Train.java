@@ -4,8 +4,9 @@ import java.util.List;
 
 public class Train implements SimulatorObject {
 
-	List<Person> passangers;
-	int size;
+	private List<Person> passangers;
+	private int size;
+	private String name;
 	
 	public Train(){
 		passangers = new ArrayList<Person>();
@@ -18,6 +19,19 @@ public class Train implements SimulatorObject {
 			return true;
 		}
 		return false;
+	}
+
+	public String getName(){
+		return name;
+	}
+	
+	public void downloadPassanger(Person p){
+		p.descend();
+		passangers.remove(p);
+	}
+	
+	public List<Person> getPassangers(){
+		return passangers;
 	}
 	
 	@Override

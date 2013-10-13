@@ -29,6 +29,12 @@ public class SimulatorScheduler {
 		}
 		jobs.get(timestamp).add(listener);
 	}
+	
+	public void deleteEvent(Double timestamp, SimulatorObject listener){
+		List<SimulatorObject> list = jobs.get(timestamp);
+		if(list != null)
+			list.remove(listener);
+	}
 
 	public void advanceTime() throws Exception {
 		while (!jobs.containsKey(actual_timestamp)) {
