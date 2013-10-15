@@ -1,6 +1,7 @@
 public class BetweenStationSpace extends SubwaySpace {
 	
-	public BetweenStationSpace(Station next, double length, String name) {
+	public BetweenStationSpace(Station previous, Station next, double length, String name) {
+		this.previous = previous;
 		this.next = next;
 		this.activity_duration = length;
 		this.name = name;

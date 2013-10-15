@@ -6,11 +6,13 @@ public class Station extends SubwaySpace {
 	// TODO: change list for queue
 	private List<Person> persons;
 
-	public Station(BetweenStationSpace next, double duration) {
-		persons = new ArrayList<Person>();
-		train = null;
+	public Station(BetweenStationSpace previous, BetweenStationSpace next, double duration, String name) {
+		this.persons = new ArrayList<Person>();
+		this.previous = previous;
 		this.next = next;
+		train = null;
 		activity_duration = duration;
+		this.name = name;
 	}
 
 	public void personArrival(Person p) {

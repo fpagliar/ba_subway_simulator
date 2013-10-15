@@ -3,6 +3,7 @@ public abstract class SubwaySpace implements SimulatorObject{
 
 	protected Train train;
 	protected SubwaySpace next;
+	protected SubwaySpace previous;
 	protected double activity_duration;
 	protected double last_arrival;
 	protected String name;
@@ -33,6 +34,21 @@ public abstract class SubwaySpace implements SimulatorObject{
 		SimulatorScheduler.getInstance().registerEvent(last_arrival + activity_duration, this);
 	}
 
+	public SubwaySpace getNext() {
+		return next;
+	}
 
+	public void setNext(SubwaySpace next) {
+		this.next = next;
+	}
+
+	public SubwaySpace getPrevious() {
+		return previous;
+	}
+
+	public void setPrevious(SubwaySpace previous) {
+		this.previous = previous;
+	}
+	
 	
 }
