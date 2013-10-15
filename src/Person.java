@@ -7,9 +7,10 @@ public class Person implements SimulatorObject{
 	private Station origin;
 	private Date start;
 	
-	public Person(){
-		id = (int)(Math.random() * 100000);
-		start = new Date();
+	public Person(Station destiny){
+		this.destiny = destiny;
+//		id = (int)(Math.random() * 100000);
+//		start = new Date();
 	}
 
 	public void event(double timestamp){

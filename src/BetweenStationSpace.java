@@ -8,6 +8,7 @@ public class BetweenStationSpace extends SubwaySpace {
 
 	@Override
 	public void event(double timestamp) throws Exception {
+		System.out.println("train leaving space:" + name);
 		next.trainArrival(train, timestamp);
 	}
 

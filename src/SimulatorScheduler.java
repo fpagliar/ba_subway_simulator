@@ -37,7 +37,9 @@ public class SimulatorScheduler {
 	}
 
 	public void advanceTime() throws Exception {
-		while (!jobs.containsKey(actual_timestamp)) {
+		if(jobs.isEmpty())
+			return;
+		while ( !jobs.containsKey(actual_timestamp)) {
 			actual_timestamp++;
 		}
 		for (SimulatorObject obj : jobs.get(actual_timestamp))

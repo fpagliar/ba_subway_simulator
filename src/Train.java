@@ -4,18 +4,18 @@ import java.util.List;
 
 public class Train implements SimulatorObject {
 
-	private List<Person> passangers;
+	private List<Person> passengers;
 	private int size;
 	private String name;
 	
 	public Train(){
-		passangers = new ArrayList<Person>();
-		size = 10;
+		passengers = new ArrayList<Person>();
+		size = 100;
 	}
 	
-	public boolean personEntering(Person p){
-		if(passangers.size() < size){
-			passangers.add(p);
+	public boolean passengerIn(Person p){
+		if(passengers.size() < size){
+			passengers.add(p);
 			return true;
 		}
 		return false;
@@ -25,13 +25,13 @@ public class Train implements SimulatorObject {
 		return name;
 	}
 	
-	public void downloadPassanger(Person p){
+	public void passengerOut(Person p){
 		p.descend();
-		passangers.remove(p);
+		passengers.remove(p);
 	}
 	
 	public List<Person> getPassangers(){
-		return passangers;
+		return passengers;
 	}
 	
 	@Override
