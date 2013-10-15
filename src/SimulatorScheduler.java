@@ -18,15 +18,13 @@ public class SimulatorScheduler {
 		return instance;
 	}
 
-	public void registerEvent(Double timestamp, SimulatorObject listener)
-			throws Exception {
-		if (timestamp < actual_timestamp) {
-			throw new Exception("Invalid time" + timestamp + " for object "
-					+ listener + " actual_time" + actual_timestamp);
-		}
-		if (!jobs.containsKey(timestamp)) {
+	public void registerEvent(Double timestamp, SimulatorObject listener) throws Exception {
+		if (timestamp < actual_timestamp)
+			throw new Exception("Invalid time" + timestamp + " for object " + listener + " actual_time" + actual_timestamp);
+
+		if (!jobs.containsKey(timestamp))
 			jobs.put(timestamp, new ArrayList<SimulatorObject>());
-		}
+
 		jobs.get(timestamp).add(listener);
 	}
 	
@@ -39,11 +37,12 @@ public class SimulatorScheduler {
 	public void advanceTime() throws Exception {
 		if(jobs.isEmpty())
 			return;
-		while ( !jobs.containsKey(actual_timestamp)) {
+		while ( !jobs.containsKey(actual_timestamp))
 			actual_timestamp++;
-		}
+
 		for (SimulatorObject obj : jobs.get(actual_timestamp))
 			obj.event(actual_timestamp);
+
 		jobs.remove(actual_timestamp);
 		actual_timestamp++;
 	}

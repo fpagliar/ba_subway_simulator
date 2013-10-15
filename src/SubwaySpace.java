@@ -32,7 +32,4 @@ public abstract class SubwaySpace implements SimulatorObject{
 		last_arrival = timestamp;
 		SimulatorScheduler.getInstance().registerEvent(last_arrival + activity_duration, this);
 	}
-
-
-	
 }

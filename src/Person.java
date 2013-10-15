@@ -9,8 +9,6 @@ public class Person implements SimulatorObject{
 	
 	public Person(Station destiny){
 		this.destiny = destiny;
-//		id = (int)(Math.random() * 100000);
-//		start = new Date();
 	}
 
 	public void event(double timestamp){
@@ -23,6 +21,10 @@ public class Person implements SimulatorObject{
 	
 	public void descend(){
 		
+	}
+	
+	public boolean hasToDecend(Station destiny){
+		return (this.destiny != null) && (this.destiny.equals(destiny));
 	}
 	
 }

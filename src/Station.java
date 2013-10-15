@@ -29,15 +29,8 @@ public class Station extends SubwaySpace {
 		}
 		List<Person> downloaders = new ArrayList<Person>();
 
-		for (Person p : train.getPassangers()) {
-			if (p.getDestiny().equals(this)) {
-				downloaders.add(p);
-			}
-		}
-
-		for (Person p : downloaders)
-			train.passengerOut(p);
-
+		train.descendPassengers(this);
+		
 		System.out.println("Downloading passangers in " + name + " #:" + downloaders.size());
 		
 
