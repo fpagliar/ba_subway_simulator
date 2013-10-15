@@ -19,6 +19,7 @@ public class SimulatorScheduler {
 	}
 
 	public void registerEvent(Double timestamp, SimulatorObject listener) throws Exception {
+//		System.out.println("register event");
 		if (timestamp < actual_timestamp)
 			throw new Exception("Invalid time" + timestamp + " for object " + listener + " actual_time" + actual_timestamp);
 
@@ -29,6 +30,7 @@ public class SimulatorScheduler {
 	}
 	
 	public void deleteEvent(Double timestamp, SimulatorObject listener){
+//		System.out.println("deleting event");
 		List<SimulatorObject> list = jobs.get(timestamp);
 		if(list != null)
 			list.remove(listener);
@@ -40,8 +42,10 @@ public class SimulatorScheduler {
 		while ( !jobs.containsKey(actual_timestamp))
 			actual_timestamp++;
 
-		for (SimulatorObject obj : jobs.get(actual_timestamp))
-			obj.event(actual_timestamp);
+		for (SimulatorObject obj : jobs.get(actual_timestamp)){
+//			System.out.println("obj:" + obj);
+			obj.event(actual_timestamp);			
+		}
 
 		jobs.remove(actual_timestamp);
 		actual_timestamp++;

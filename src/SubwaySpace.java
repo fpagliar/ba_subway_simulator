@@ -13,12 +13,11 @@ public abstract class SubwaySpace implements SimulatorObject{
 	}	
 	
 	public void checkTrainArrivalAndTakeOff(double timestamp) throws Exception{
-		if (train != null) {
+		if (this.train != null) {
 			// there is a train and it is not leaving the station
 			if (getTimeOff() != timestamp)
 				throw new Exception("Trains crashed in station: " + name
-						+ " - Train1:" + this.train.getName() + " Train2:"
-						+ train.getName());
+						+ " - Train1:" + this.train.getName() );
 			// to make the other train leave first
 			this.event(timestamp);
 			// to avoid being called on the same event two times

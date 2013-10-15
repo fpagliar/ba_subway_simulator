@@ -11,6 +11,8 @@ public class BetweenStationSpace extends SubwaySpace {
 	public void event(double timestamp) throws Exception {
 		System.out.println("train leaving space:" + name);
 		next.trainArrival(train, timestamp);
+		this.train = null;
+		System.out.println("Space:" + name + " next:" + next.name + " previous: " + previous.name);
 	}
 
 }

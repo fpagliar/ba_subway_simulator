@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class Start {
@@ -9,53 +11,60 @@ public class Start {
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) throws Exception {
-		Station last = new Station(null, null, 5, "last");
-		BetweenStationSpace space2 = new BetweenStationSpace(null, last, 5, "entre2");
-		Station middle = new Station(space2,null, 2, "middle");
-		BetweenStationSpace space = new BetweenStationSpace(middle, null, 10, "entre1");
-		Station first = new Station(space, null, 3, "first");
 
+		Line linea = new Line();
+		Station first = linea.stations.get(0);
+		
+//		
+//		Station last = new Station(null, null, 5, "last");
+//		BetweenStationSpace space2 = new BetweenStationSpace(last, null, 5, "entre2");
+//		Station middle = new Station(space2, null, 2, "middle");
+//		BetweenStationSpace space = new BetweenStationSpace(middle, null, 10, "entre1");
+//		Station first = new Station(space, null, 3, "first");
+//
 		Train train = new Train();
 		Person p = null;
-
+//
+		int random = 0;
 		for(int i = 0; i < 70; i++){
-			p = new Person(last);
+			random = (int) (Math.random() * linea.stations.size());
+			p = new Person(linea.stations.get(random));
 			train.passengerIn(p);
 		}
-
-		for(int i = 0; i < 10; i++){
-			p = new Person(middle);
-			train.passengerIn(p);
-		}
-
-		for(int i = 0; i < 50; i++){
-			p = new Person(last);
-			middle.personArrival(p);
-		}
-
+//
+//		for(int i = 0; i < 10; i++){
+//			p = new Person(middle);
+//			train.passengerIn(p);
+//		}
+//
+//		for(int i = 0; i < 50; i++){
+//			p = new Person(last);
+//			middle.personArrival(p);
+//		}
+//
 		first.trainArrival(train, 0);
-		
-		for(int i = 0; i < 10; i++){
+//		
+		for(int i = 0; i < 1000; i++){
 			System.out.println("tick");
 			SimulatorScheduler.getInstance().advanceTime();
 		}
 		
-		System.out.println("Final State");
-
-		System.out.println("last -> train:" + last.train + " #:" + last.getPersonsWaiting());
-		System.out.println("middle -> train:" + middle.train + " #:" + middle.getPersonsWaiting());
-		System.out.println("first -> train:" + first.train + " #:" + first.getPersonsWaiting());
-
-		System.out.println("train -> #:" + train.getPassangers().size());
-		
+//		System.out.println("Final State");
+//
+//		System.out.println("last -> train:" + last.train + " #:" + last.getPersonsWaiting());
+//		System.out.println("middle -> train:" + middle.train + " #:" + middle.getPersonsWaiting());
+//		System.out.println("first -> train:" + first.train + " #:" + first.getPersonsWaiting());
+//
+//		System.out.println("train -> #:" + train.getPassangers().size());
+//		
 	}
 	
-	private class Line {
+	private static class Line {
 		List<Station> stations;
 		
-		public Line() {
+		public Line() throws Exception {
 			stations = new ArrayList<Station>();
-			Station congreso = new Station(null, null, 3, "Congreso de Tucuman");
+			Station congreso = new Station(null, null, 3, "Congreso de Tucuman", true);
 			Station juramento = new Station(null, null, 3, "Juramento");
 			Station josehernandez = new Station(null, null, 3, "Jose Hernandez");
 			Station olleros = new Station(null, null, 3, "Olleros");
@@ -70,9 +79,9 @@ public class Start {
 			Station callao = new Station(null, null, 3, "Callao");
 			Station tribunales = new Station(null, null, 3, "Tribunales");
 			Station nuevejulio = new Station(null, null, 3, "9 de Julio");
-			Station catedral = new Station(null, null, 3, "Catedral");
+			Station catedral = new Station(null, null, 3, "Catedral", true);
 			
-			congreso.setPrevious(new BetweenStationSpace(congreso, congreso, 3, "Congreso-Cabecera"));
+			congreso.setPrevious(new BetweenStationSpace(juramento, congreso, 3, "Juramento-Congreso"));
 			congreso.setNext(new BetweenStationSpace(congreso, juramento, 3, "Congreso-Juramento"));
 			juramento.setPrevious(new BetweenStationSpace(congreso, juramento, 3, "Congreso-Juramento"));
 			juramento.setNext(new BetweenStationSpace(juramento, josehernandez, 3, "Juramento-Jose Hernandez"));
@@ -103,7 +112,7 @@ public class Start {
 			nuevejulio.setPrevious(new BetweenStationSpace(tribunales, nuevejulio, 3, "Tribunales-9 de Julio"));
 			nuevejulio.setNext(new BetweenStationSpace(nuevejulio, catedral, 3, "9 de Julio-Catedral"));
 			catedral.setPrevious(new BetweenStationSpace(nuevejulio, catedral, 3, "9 de Julio-Catedral"));
-			catedral.setNext(new BetweenStationSpace(catedral, catedral, 3, "Catedral-Cabecera"));
+			catedral.setNext(new BetweenStationSpace(catedral, nuevejulio, 3, "Catedral-9 de Julio"));
 			
 			stations.add(congreso);
 			stations.add(juramento);
@@ -121,6 +130,19 @@ public class Start {
 			stations.add(tribunales);
 			stations.add(nuevejulio);
 			stations.add(catedral);
+			
+			
+			Map<Station, Integer> distribution;
+			for(Station s: stations) {
+				distribution = new HashMap<Station, Integer>();
+				for(Station s2: stations){
+					if(!s2.equals(s))
+						distribution.put(s2, (int)(Math.random() * 10) );
+				}
+				PersonArrivalSimulator a = new PersonArrivalSimulator(3, s, distribution);
+				a.start(0.0);
+			}
+			
 		}
 	}
 

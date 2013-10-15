@@ -4,13 +4,18 @@ import java.util.List;
 
 public class Train implements SimulatorObject {
 
+	public enum Direction{
+		LEFT, RIGHT;
+	}
 	private List<Person> passengers;
 	private int size;
 	private String name;
+	private Direction direction;
 	
 	public Train(){
 		passengers = new ArrayList<Person>();
 		size = 100;
+		direction = Direction.RIGHT;
 	}
 	
 	public boolean passengerIn(Person p){
@@ -21,6 +26,10 @@ public class Train implements SimulatorObject {
 		return false;
 	}
 
+	public Direction getDirection(){
+		return direction;
+	}
+	
 	public String getName(){
 		return name;
 	}
@@ -41,10 +50,18 @@ public class Train implements SimulatorObject {
 				downloaders.add(p);
 		
 		for (Person p: downloaders){
-			p.descend();
-			passengers.remove(p);
+			passengerOut(p);
 		}
+
+		System.out.println("Downloading passangers in " + actual.name + " #:" + downloaders.size());
 		return;
+	}
+	
+	public void reverse(){
+		if(direction == Direction.LEFT)
+			direction = Direction.RIGHT;
+		else
+			direction = Direction.LEFT;
 	}
 	
 	
