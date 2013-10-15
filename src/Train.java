@@ -34,6 +34,20 @@ public class Train implements SimulatorObject {
 		return passengers;
 	}
 	
+	public void descendPassengers(Station actual){
+		List<Person> downloaders = new ArrayList<Person>();
+		for(Person p: passengers)
+			if (p.hasToDecend(actual))
+				downloaders.add(p);
+		
+		for (Person p: downloaders){
+			p.descend();
+			passengers.remove(p);
+		}
+		return;
+	}
+	
+	
 	@Override
 	public void event(double timestamp) {
 		// TODO Auto-generated method stub

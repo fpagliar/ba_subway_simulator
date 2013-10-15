@@ -15,7 +15,6 @@ public class Start {
 		BetweenStationSpace space = new BetweenStationSpace(middle, null, 10, "entre1");
 		Station first = new Station(space, null, 3, "first");
 
-		
 		Train train = new Train();
 		Person p = null;
 
@@ -49,19 +48,6 @@ public class Start {
 
 		System.out.println("train -> #:" + train.getPassangers().size());
 		
-//		List<Person> array = new ArrayList<Person>();
-//		for (int i = 0; i < 2000000; i++){
-//			array.add(new Person());
-//		}
-//
-//		System.out.println("END");
-//		double d = 0;
-//		while(d >= 0){
-//			for(Person p: array)
-//				p.event(1);
-//			System.out.println(d);
-//			d++;
-//		}
 	}
 	
 	private class Line {

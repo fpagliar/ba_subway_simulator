@@ -49,6 +49,4 @@ public abstract class SubwaySpace implements SimulatorObject{
 	public void setPrevious(SubwaySpace previous) {
 		this.previous = previous;
 	}
-	
-	
 }
