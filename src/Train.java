@@ -15,7 +15,7 @@ public class Train implements SimulatorObject {
 	public Train(){
 		passengers = new ArrayList<Person>();
 		size = 100;
-		direction = Direction.RIGHT;
+		direction = Direction.LEFT;
 	}
 	
 	public boolean passengerIn(Person p){

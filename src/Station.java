@@ -49,15 +49,14 @@ public class Station extends SubwaySpace {
 		System.out.println("Passangers got in the train in:" + name + " #:" + qty);
 		System.out.println("train leaving station:" + name + " with #:" + train.getPassangers().size() );
 
-		
+		if (terminal)
+			train.reverse();
+
 		if(train.getDirection() == Train.Direction.RIGHT)
 			next.trainArrival(train, timestamp);
 		else 
 			previous.trainArrival(train, timestamp);
-		if (terminal){
-			train.reverse();
-		}
-		System.out.println("Station:" + name + " next:" + next.name + " previous: " + previous.name + " direction:" + train.getDirection());
+//		System.out.println("Station:" + name + " next:" + next.name + " previous: " + previous.name + " direction:" + train.getDirection());
 		this.train = null;
 	}
 
