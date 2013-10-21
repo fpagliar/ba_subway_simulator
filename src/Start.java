@@ -3,7 +3,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class Start {
 
 	/**
@@ -12,74 +11,49 @@ public class Start {
 	 */
 	public static void main(String[] args) throws Exception {
 
+		SubwayMap.getInstance().start();
 		Line linea = new Line();
 		Station first = linea.stations.get(0);
 		
-//		
-//		Station last = new Station(null, null, 5, "last");
-//		BetweenStationSpace space2 = new BetweenStationSpace(last, null, 5, "entre2");
-//		Station middle = new Station(space2, null, 2, "middle");
-//		BetweenStationSpace space = new BetweenStationSpace(middle, null, 10, "entre1");
-//		Station first = new Station(space, null, 3, "first");
-//
 		Train train = new Train();
 		Person p = null;
-//
+		
 		int random = 0;
 		for(int i = 0; i < 70; i++){
 			random = (int) (Math.random() * linea.stations.size());
 			p = new Person(linea.stations.get(random));
 			train.passengerIn(p);
 		}
-//
-//		for(int i = 0; i < 10; i++){
-//			p = new Person(middle);
-//			train.passengerIn(p);
-//		}
-//
-//		for(int i = 0; i < 50; i++){
-//			p = new Person(last);
-//			middle.personArrival(p);
-//		}
-//
+		
 		first.trainArrival(train, 0);
-//		
 		for(int i = 0; i < 1000; i++){
+			Thread.sleep(500);
 			System.out.println("tick");
 			SimulatorScheduler.getInstance().advanceTime();
 		}
-		
-//		System.out.println("Final State");
-//
-//		System.out.println("last -> train:" + last.train + " #:" + last.getPersonsWaiting());
-//		System.out.println("middle -> train:" + middle.train + " #:" + middle.getPersonsWaiting());
-//		System.out.println("first -> train:" + first.train + " #:" + first.getPersonsWaiting());
-//
-//		System.out.println("train -> #:" + train.getPassangers().size());
-//		
 	}
 	
 	private static class Line {
 		List<Station> stations;
-		
+
 		public Line() throws Exception {
 			stations = new ArrayList<Station>();
-			Station congreso = new Station(null, null, 3, "Congreso de Tucuman", true);
-			Station juramento = new Station(null, null, 3, "Juramento");
-			Station josehernandez = new Station(null, null, 3, "Jose Hernandez");
-			Station olleros = new Station(null, null, 3, "Olleros");
-			Station carranza = new Station(null, null, 3, "Ministro Carranza");
-			Station palermo = new Station(null, null, 3, "Palermo");
-			Station plazaitalia = new Station(null, null, 3, "Plaza Italia");
-			Station scalabrini = new Station(null, null, 3, "Scalabrini Ortiz");
-			Station bulnes = new Station(null, null, 3, "Bulnes");
-			Station aguero = new Station(null, null, 3, "Aguero");
-			Station pueyrredon = new Station(null, null, 3, "Pueyrredon");
-			Station facultad = new Station(null, null, 3, "Fctad de Medicina");
-			Station callao = new Station(null, null, 3, "Callao");
-			Station tribunales = new Station(null, null, 3, "Tribunales");
-			Station nuevejulio = new Station(null, null, 3, "9 de Julio");
-			Station catedral = new Station(null, null, 3, "Catedral", true);
+			Station congreso = new Station(null, null, 3, "Congreso de Tucuman", 152, 74, true);
+			Station juramento = new Station(null, null, 3, "Juramento", 224, 74);
+			Station josehernandez = new Station(null, null, 3, "Jose Hernandez", 297, 74);
+			Station olleros = new Station(null, null, 3, "Olleros", 424, 74);
+			Station carranza = new Station(null, null, 3, "Ministro Carranza", 492, 74);
+			Station palermo = new Station(null, null, 3, "Palermo", 527, 74);
+			Station plazaitalia = new Station(null, null, 3, "Plaza Italia", 551, 96);
+			Station scalabrini = new Station(null, null, 3, "Scalabrini Ortiz", 575, 118);
+			Station bulnes = new Station(null, null, 3, "Bulnes", 590, 135);
+			Station aguero = new Station(null, null, 3, "Aguero", 612, 155);
+			Station pueyrredon = new Station(null, null, 3, "Pueyrredon", 644, 155);
+			Station facultad = new Station(null, null, 3, "Fctad de Medicina", 679, 185);
+			Station callao = new Station(null, null, 3, "Callao", 724, 185);
+			Station tribunales = new Station(null, null, 3, "Tribunales", 760, 215);
+			Station nuevejulio = new Station(null, null, 3, "9 de Julio", 800, 257);
+			Station catedral = new Station(null, null, 3, "Catedral", 841, 298, true);
 			
 			congreso.setPrevious(new BetweenStationSpace(juramento, congreso, 3, "Juramento-Congreso"));
 			congreso.setNext(new BetweenStationSpace(congreso, juramento, 3, "Congreso-Juramento"));

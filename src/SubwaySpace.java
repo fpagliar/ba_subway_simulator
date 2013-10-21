@@ -1,4 +1,5 @@
 
+
 public abstract class SubwaySpace implements SimulatorObject{
 
 	protected Train train;
@@ -7,6 +8,8 @@ public abstract class SubwaySpace implements SimulatorObject{
 	protected double activity_duration;
 	protected double last_arrival;
 	protected String name;
+	protected float x;
+	protected float y;
 
 	public double getTimeOff() {
 		return last_arrival + activity_duration;
@@ -31,6 +34,7 @@ public abstract class SubwaySpace implements SimulatorObject{
 		this.train = train;
 		last_arrival = timestamp;
 		SimulatorScheduler.getInstance().registerEvent(last_arrival + activity_duration, this);
+		SubwayMap.getInstance().addSpace(this);
 	}
 
 	public SubwaySpace getNext() {
@@ -47,5 +51,10 @@ public abstract class SubwaySpace implements SimulatorObject{
 
 	public void setPrevious(SubwaySpace previous) {
 		this.previous = previous;
+	}
+	
+	public void removeFromMap() {
+		if(!SubwayMap.getInstance().removeSpace(this))
+			System.err.println("No se pudo borrar la estacion");
 	}
 }

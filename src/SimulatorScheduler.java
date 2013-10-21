@@ -37,6 +37,7 @@ public class SimulatorScheduler {
 	}
 
 	public void advanceTime() throws Exception {
+		SubwayMap.getInstance().render();
 		if(jobs.isEmpty())
 			return;
 		while ( !jobs.containsKey(actual_timestamp))
