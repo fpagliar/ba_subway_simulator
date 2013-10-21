@@ -1,6 +1,7 @@
+
 import java.util.Date;
 
-public class Person implements SimulatorObject{
+public class Person {
 
 	private int id;
 	private Station destiny;
@@ -11,10 +12,6 @@ public class Person implements SimulatorObject{
 		this.destiny = destiny;
 	}
 
-	public void event(double timestamp){
-		
-	}
-	
 	public Station getDestiny(){
 		return destiny;
 	}

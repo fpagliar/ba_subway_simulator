@@ -1,60 +1,63 @@
 
-
 public abstract class SubwaySpace implements SimulatorObject{
 
-	protected Train train;
-	protected SubwaySpace next;
-	protected SubwaySpace previous;
-	protected double activity_duration;
-	protected double last_arrival;
-	protected String name;
 	protected float x;
 	protected float y;
 
-	public double getTimeOff() {
-		return last_arrival + activity_duration;
-	}	
+	private SubwaySpace nextToEnd;
+	private SubwaySpace nextToStart;
+	private long activityDuration;
+	private String name;
 	
-	public void checkTrainArrivalAndTakeOff(double timestamp) throws Exception{
-		if (this.train != null) {
-			// there is a train and it is not leaving the station
-			if (getTimeOff() != timestamp)
-				throw new Exception("Trains crashed in station: " + name
-						+ " - Train1:" + this.train.getName() );
-			// to make the other train leave first
-			this.event(timestamp);
-			// to avoid being called on the same event two times
-			SimulatorScheduler.getInstance().deleteEvent(timestamp, this);
-		}
-		return;
+	protected SubwaySpace(SubwaySpace nextToStart, SubwaySpace nextToEnd, long activityDuration, String name){
+		this.nextToStart = nextToStart;
+		this.nextToEnd = nextToEnd;
+		this.name = name;
+		this.activityDuration = activityDuration;
+	}
+
+	// Setters
+
+	public void setNextToEnd(SubwaySpace nextToEnd) {
+		this.nextToEnd = nextToEnd;
 	}
 	
-	public void trainArrival(Train train, double timestamp) throws Exception {
-		checkTrainArrivalAndTakeOff(timestamp);
-		this.train = train;
-		last_arrival = timestamp;
-		SimulatorScheduler.getInstance().registerEvent(last_arrival + activity_duration, this);
-		SubwayMap.getInstance().addSpace(this);
+	public void setNextToStart(SubwaySpace nextToStart) {
+		this.nextToStart = nextToStart;
+	}
+	
+	public void setActivityDuration(long activityDuration) {
+		this.activityDuration = activityDuration;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public SubwaySpace getNext() {
-		return next;
-	}
+	// Getters
 
-	public void setNext(SubwaySpace next) {
-		this.next = next;
+	public SubwaySpace getNextToEnd() {
+		return nextToEnd;
 	}
-
-	public SubwaySpace getPrevious() {
-		return previous;
+	
+	public SubwaySpace getNextToStart() {
+		return nextToStart;
 	}
-
-	public void setPrevious(SubwaySpace previous) {
-		this.previous = previous;
+	
+	public long getActivityDuration() {
+		return activityDuration;
+	}
+	
+	public String getName() {
+		return name;
 	}
 	
 	public void removeFromMap() {
 		if(!SubwayMap.getInstance().removeSpace(this))
 			System.err.println("No se pudo borrar la estacion");
 	}
+	public abstract void trainArrival(Train train, Long timestamp) throws Exception;
+
+	
+	public abstract void setDefaultName();
 }

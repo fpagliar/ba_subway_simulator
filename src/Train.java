@@ -1,12 +1,12 @@
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class Train implements SimulatorObject {
+public class Train {
 
 	public enum Direction{
-		LEFT, RIGHT;
+		TO_END, TO_START;
 	}
+	
 	private List<Person> passengers;
 	private int size;
 	private String name;
@@ -15,9 +15,14 @@ public class Train implements SimulatorObject {
 	public Train(){
 		passengers = new ArrayList<Person>();
 		size = 100;
-		direction = Direction.LEFT;
+		direction = Direction.TO_END;
 	}
 	
+	public Train(String name){
+		this();
+		this.name = name;
+	}
+
 	public boolean passengerIn(Person p){
 		if(passengers.size() < size){
 			passengers.add(p);
@@ -53,22 +58,19 @@ public class Train implements SimulatorObject {
 			passengerOut(p);
 		}
 
-		System.out.println("Downloading passangers in " + actual.name + " #:" + downloaders.size());
+//		System.out.println("Downloading passangers in " + actual.name + " #:" + downloaders.size());
 		return;
 	}
 	
 	public void reverse(){
-		if(direction == Direction.LEFT)
-			direction = Direction.RIGHT;
+		if(direction == Direction.TO_END)
+			direction = Direction.TO_START;
 		else
-			direction = Direction.LEFT;
-	}
-	
-	
-	@Override
-	public void event(double timestamp) {
-		// TODO Auto-generated method stub
-		
+			direction = Direction.TO_END;
 	}
 
+	public String toString(){
+		return getName();
+	}
+	
 }
