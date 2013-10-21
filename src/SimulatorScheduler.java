@@ -32,11 +32,13 @@ public class SimulatorScheduler {
 		if (!jobs.containsKey(timestamp))
 			jobs.put(timestamp, new ArrayList<SchedulerRegistrator>());
 
-		jobs.get(timestamp).add(listener);
+		// To avoid registering the same event twice (for ex a train leaving on each direction at the same time)
+		if(! jobs.get(timestamp).contains(listener))
+			jobs.get(timestamp).add(listener);
 	}
 	
 	public void deleteEvent(Long timestamp, SimulatorObject listener){
-//		System.out.println("deleting event - time: " + timestamp + " listener: " + listener);
+		System.out.println("deleting event - time: " + timestamp + " listener: " + listener);
 		List<SchedulerRegistrator> list = jobs.get(timestamp);
 		if(list != null)
 			list.remove(listener);

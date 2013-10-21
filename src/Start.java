@@ -23,11 +23,14 @@ public class Start {
 		}
 
 		first.trainArrival(train, 0L);
-
+		int k = 1;
 		for (int i = 0; i < 1000; i++) {
 			// System.out.println("tick");
 			TimeUnit.MILLISECONDS.sleep(100);
 			if (i % 100 == 99) {
+				k++;
+				System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+				System.out.println("Trains in the system:" + k);
 				train = new Train("Start#" + i);
 				for (int j = 0; j < 70; j++) {
 					random = (int) (Math.random() * linea.stations.size());

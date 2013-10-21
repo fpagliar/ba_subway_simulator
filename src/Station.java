@@ -72,13 +72,13 @@ public class Station extends SubwaySpace {
 	public void event(Long timestamp) throws Exception {
 		removeFromMap();
 		System.out.println(".......... station event ................");
+		System.out.println("Station:" + getName());
 		System.out.println("timeToLeaveStart:" + timeToLeaveToStart + " timeToLeaveToend:" + timeToLeaveToEnd + " time:" + timestamp);
 		if(timeToLeaveToStart != null && timeToLeaveToStart.equals(timestamp)){
 			if(trainToStart == null){
 				System.out.println("TrainToStart:" + trainToStart);
 				System.out.println("TrainToEnd:" + trainToEnd);
 				System.out.println("timestamp:" + timestamp);
-				System.out.println("Station:" + getName());
 			}
 			trainToStart.descendPassengers(this);
 			while (passangersToStart.size() > 0 && trainToStart.passengerIn(passangersToStart.peek())) {
