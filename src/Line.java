@@ -8,13 +8,17 @@ public class Line {
 	private String[] names;
 	private Integer[] xaxis;
 	private Integer[] yaxis;
+	private Integer[] lengths;
 
-	public Line(String[] names, Integer[] xaxis, Integer[] yaxis) throws Exception {
+	public Line(String[] names, Integer[] xaxis, Integer[] yaxis, Integer[] lengths) throws Exception {
 		this.names = names;
 		this.xaxis = xaxis;
 		this.yaxis = yaxis;
+		this.lengths = lengths;
 		stations = new ArrayList<Station>();
 
+		if(names.length != lengths.length)
+			System.out.println(names[0] + " l1:" + names.length + " l2:" + lengths.length);
 		loadStations();
 
 		Map<Station, Integer> distribution;
@@ -56,7 +60,7 @@ public class Line {
 			if (previousSpace != null)
 				previousSpace.setNextToEnd(currentStation);
 			stations.add(currentStation);
-			previousSpace = new BetweenStationSpace(currentStation, null, 1 + (long) (Math.random() * 10), null);
+			previousSpace = new BetweenStationSpace(currentStation, null, (long)lengths[i], null);
 			currentStation.setNextToEnd(previousSpace);
 		}
 

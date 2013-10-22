@@ -119,6 +119,7 @@ public class SubwayMap {
 		for (Train t : trains) {
 			graphics.setColor(t.getColor());
 			graphics.fill(new Circle(t.getX(), t.getY(), 5));
+//			graphics.drawString(t.getName(),t.getX()+10,t.getY());
 //			graphics.fill(new Circle(722, 494, 5));
 		}
 		Display.update();

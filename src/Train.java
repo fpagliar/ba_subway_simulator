@@ -16,18 +16,14 @@ public class Train {
 	private float x;
 	private float y;
 	
-	public Train(){
-		SubwayMap.getInstance().addTrain(this);
+	public Train(String name){
+		this.name = name;
 		passengers = new ArrayList<Person>();
 		size = 100;
 		direction = Direction.TO_END;
+		SubwayMap.getInstance().addTrain(this);
 	}
 	
-	public Train(String name){
-		this();
-		this.name = name;
-	}
-
 	public boolean passengerIn(Person p){
 		if(passengers.size() < size){
 			passengers.add(p);
