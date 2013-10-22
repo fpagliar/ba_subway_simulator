@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import org.newdawn.slick.Color;
+
 public class Train {
 
 	public enum Direction{
@@ -11,8 +13,11 @@ public class Train {
 	private int size;
 	private String name;
 	private Direction direction;
+	private float x;
+	private float y;
 	
 	public Train(){
+		SubwayMap.getInstance().addTrain(this);
 		passengers = new ArrayList<Person>();
 		size = 100;
 		direction = Direction.TO_END;
@@ -73,4 +78,21 @@ public class Train {
 		return getName();
 	}
 	
+	public float getX(){
+		return x;
+	}
+	
+	public float getY(){
+		return y;
+	}
+	
+	public Color getColor(){
+		if(getDirection() == direction.TO_START)
+			return Color.magenta;
+		return Color.black;
+	}
+	public void setPosition(float x, float y){
+		this.x = x;
+		this.y = y;
+	}
 }
