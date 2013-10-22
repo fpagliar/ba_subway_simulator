@@ -1,4 +1,3 @@
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,20 +20,19 @@ public class SubwayMap {
 	private Graphics graphics;
 	private static SubwayMap subwayMap = null;
 	private List<SubwaySpace> spaces;
-	
+
 	public static SubwayMap getInstance() {
-		if(subwayMap == null)
+		if (subwayMap == null)
 			subwayMap = new SubwayMap();
 		return subwayMap;
 	}
-	
+
 	private SubwayMap() {
 		graphics = new Graphics();
 		Graphics.setCurrent(graphics);
 		spaces = new ArrayList<SubwaySpace>();
-		//this.start();
 	}
-	
+
 	/**
 	 * Start the example
 	 */
@@ -95,8 +93,7 @@ public class SubwayMap {
 	private void init() {
 
 		try {
-			texture = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/mapa_estaciones2.png"));
+			texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("resources/mapa_estaciones2.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -119,20 +116,21 @@ public class SubwayMap {
 		GL11.glTexCoord2f(0, 1);
 		GL11.glVertex2f(0, texture.getTextureHeight());
 		GL11.glEnd();
-		for(SubwaySpace s : spaces) {
+		for (SubwaySpace s : spaces) {
 			graphics.setColor(Color.red);
 			graphics.fill(new Circle(s.x, s.y, 5));
+//			graphics.fill(new Circle(722, 494, 5));
 		}
 		Display.update();
 		Display.sync(100);
 	}
-	
+
 	public boolean addSpace(SubwaySpace s) {
 		return this.spaces.add(s);
 	}
-	
+
 	public boolean removeSpace(SubwaySpace s) {
 		return this.spaces.remove(s);
 	}
-	
+
 }
