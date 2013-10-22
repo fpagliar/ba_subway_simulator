@@ -25,7 +25,8 @@ public class SimulatorScheduler {
 	public void registerEvent(Long timestamp, SchedulerRegistrator listener) throws Exception {
 		if(timestamp == actual_timestamp)
 			throw new Exception("Impossible to register event in the same moment! time:" + timestamp + " listener:" + listener);
-		System.out.println("register event - " + listener.getDescription() );
+//		System.out.println("register event - " + listener.getDescription() );
+
 		if (timestamp < actual_timestamp)
 			throw new Exception("Invalid time" + timestamp + " for object " + listener + " actual_time" + actual_timestamp);
 
@@ -38,7 +39,7 @@ public class SimulatorScheduler {
 	}
 	
 	public void deleteEvent(Long timestamp, SimulatorObject listener){
-		System.out.println("deleting event - time: " + timestamp + " listener: " + listener);
+//		System.out.println("deleting event - time: " + timestamp + " listener: " + listener);
 		List<SchedulerRegistrator> list = jobs.get(timestamp);
 		if(list != null)
 			list.remove(listener);
@@ -57,7 +58,7 @@ public class SimulatorScheduler {
 		}
 		
 		for (SchedulerRegistrator obj : jobs.get(actual_timestamp)){
-			System.out.println("eventing - " + obj.getDescription());
+//			System.out.println("eventing - " + obj.getDescription());
 			obj.getObject().event(actual_timestamp);			
 		}
 

@@ -33,9 +33,9 @@ public class BetweenStationSpace extends SubwaySpace {
 	}
 	
 	public void trainArrival(Train train, Long timestamp) throws Exception {
-		System.out.println("****************");
-		System.out.println("Train " + train + " arriving to space: " + getName() + " direction:" + train.getDirection() + " passengers:" + train.getPassangers().size() + " time: " + timestamp + " leaving:" + (timestamp + getActivityDuration()));
-		System.out.println("****************");
+//		System.out.println("****************");
+//		System.out.println("Train " + train + " arriving to space: " + getName() + " direction:" + train.getDirection() + " passengers:" + train.getPassangers().size() + " time: " + timestamp + " leaving:" + (timestamp + getActivityDuration()));
+//		System.out.println("****************");
 		Long departure = timestamp + getActivityDuration();
 		if(train.getDirection().equals(Train.Direction.TO_END)){
 			trainsToEnd.add(train);
