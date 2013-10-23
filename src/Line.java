@@ -62,6 +62,7 @@ public class Line {
 			stations.add(currentStation);
 			previousSpace = new BetweenStationSpace(currentStation, null, (long)lengths[i], null);
 			currentStation.setNextToEnd(previousSpace);
+			SubwayMap.getInstance().addStation(currentStation);
 		}
 
 		currentStation.setNextToEnd(new BouncePoint(currentStation));

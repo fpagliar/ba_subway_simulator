@@ -43,7 +43,8 @@ public class PersonArrivalSimulator implements SimulatorObject {
 	public void event(Long timestamp) throws Exception {
 		Long next = timestamp + (long)(seed * Math.random()) + 1;
 		SimulatorScheduler.getInstance().registerEvent(next, new SchedulerRegistrator(this, "person arriving to -> " + station.getName()));
-		station.personArrival(new Person(getRandomDestiny()));
+		if(Math.random() > 0.7)
+			station.personArrival(new Person(getRandomDestiny()));
 	}
 	
 	@Override

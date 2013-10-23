@@ -83,7 +83,7 @@ public class Train {
 	}
 	
 	public Color getColor(){
-		if(getDirection() == direction.TO_START)
+		if(getDirection() == Direction.TO_START)
 			return Color.magenta;
 		return Color.black;
 	}

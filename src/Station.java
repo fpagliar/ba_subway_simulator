@@ -33,13 +33,15 @@ public class Station extends SubwaySpace {
 
 	@Override
 	public void trainArrival(Train train, Long timestamp) throws Exception {
-//		System.out.println("++++++++++++++++++++++");
-//		System.out.println("Train arriving to station: " + getName() + " direction:" + train.getDirection() + " passengers:"
-//				+ train.getPassangers().size() + " time: " + timestamp + " leaving:" + (timestamp + getActivityDuration()));
-//		System.out.println("++++++++++++++++++++++");
-		
+		// System.out.println("++++++++++++++++++++++");
+		// System.out.println("Train arriving to station: " + getName() +
+		// " direction:" + train.getDirection() + " passengers:"
+		// + train.getPassangers().size() + " time: " + timestamp + " leaving:"
+		// + (timestamp + getActivityDuration()));
+		// System.out.println("++++++++++++++++++++++");
+
 		train.setPosition(getX(), getY());
-		
+
 		// if I have a pending event this moment, first execute it in order to
 		// free the space for the new train
 		if (timeToLeaveToEnd == timestamp || timeToLeaveToStart == timestamp) {
@@ -80,15 +82,17 @@ public class Station extends SubwaySpace {
 
 	@Override
 	public void event(Long timestamp) throws Exception {
-//		removeFromMap();
-//		System.out.println(".......... station event ................");
-//		System.out.println("Station:" + getName());
-//		System.out.println("timeToLeaveStart:" + timeToLeaveToStart + " timeToLeaveToend:" + timeToLeaveToEnd + " time:" + timestamp);
+		// removeFromMap();
+		// System.out.println(".......... station event ................");
+		// System.out.println("Station:" + getName());
+		// System.out.println("timeToLeaveStart:" + timeToLeaveToStart +
+		// " timeToLeaveToend:" + timeToLeaveToEnd + " time:" + timestamp);
 		if (timeToLeaveToStart != null && timeToLeaveToStart.equals(timestamp)) {
 			trainToStart.descendPassengers(this);
 			while (passangersToStart.size() > 0 && trainToStart.passengerIn(passangersToStart.peek())) {
 				passangersToStart.poll();
 			}
+			SubwayMap.getInstance().addPassengersNotLoaded(passangersToStart.size());
 			timeToLeaveToStart = null;
 			getNextToStart().trainArrival(trainToStart, timestamp);
 			trainToStart = null;
@@ -99,14 +103,20 @@ public class Station extends SubwaySpace {
 			while (passangersToEnd.size() > 0 && trainToEnd.passengerIn(passangersToEnd.peek())) {
 				passangersToEnd.poll();
 			}
-			// Setted before calling trainArrival because if not it would resolve in a bounce-back
-			// stack overflow due to calling in event -> trainArrival 
+			SubwayMap.getInstance().addPassengersNotLoaded(passangersToEnd.size());
+			// Setted before calling trainArrival because if not it would
+			// resolve in a bounce-back
+			// stack overflow due to calling in event -> trainArrival
 			// -> event (in order for trains to leave before entering newones)
 			timeToLeaveToEnd = null;
 			getNextToEnd().trainArrival(trainToEnd, timestamp);
 			trainToEnd = null;
 		}
-//		System.out.println(".................................");
+		// System.out.println(".................................");
+	}
+
+	public Integer getTotalPassengers() {
+		return passangersToEnd.size() + passangersToStart.size();
 	}
 
 }

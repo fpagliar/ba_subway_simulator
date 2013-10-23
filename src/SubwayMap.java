@@ -1,3 +1,4 @@
+import java.awt.Font;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +9,9 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
@@ -20,6 +23,10 @@ public class SubwayMap {
 	private Graphics graphics;
 	private static SubwayMap subwayMap = null;
 	private List<Train> trains;
+	private List<Station> stations;
+	private Font font;
+	private TrueTypeFont ttf;
+	private int passengersNotLoaded = 0;
 
 	public static SubwayMap getInstance() {
 		if (subwayMap == null)
@@ -31,6 +38,7 @@ public class SubwayMap {
 		graphics = new Graphics();
 		Graphics.setCurrent(graphics);
 		trains = new ArrayList<Train>();
+		stations = new ArrayList<Station>();
 	}
 
 	/**
@@ -97,6 +105,8 @@ public class SubwayMap {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		font = new Font("Arial", Font.BOLD, 10);
+		ttf = new TrueTypeFont(font, true);
 	}
 
 	/**
@@ -119,19 +129,39 @@ public class SubwayMap {
 		for (Train t : trains) {
 			graphics.setColor(t.getColor());
 			graphics.fill(new Circle(t.getX(), t.getY(), 5));
-//			graphics.drawString(t.getName(),t.getX()+10,t.getY());
-//			graphics.fill(new Circle(722, 494, 5));
 		}
+		for (Station s : stations) {
+			graphics.setColor(Color.white);
+			graphics.fill(new Rectangle(s.getX() - 5, s.getY() - 20, 20, 15));
+			Color c = Color.red;
+			if (s.getTotalPassengers() < 50)
+				c = Color.green.darker();
+			else if (s.getTotalPassengers() < 100)
+				c = Color.yellow.darker((float) 0.2);
+			ttf.drawString(s.getX() - 5, s.getY() - 20, s.getTotalPassengers().toString(), c);
+		}
+		graphics.setColor(Color.black);
+		ttf.drawString(10, 10, "Pasajeros no subidos: " + Integer.toString(passengersNotLoaded), Color.black);
 		Display.update();
 		Display.sync(100);
+		if (Display.isCloseRequested()) {
+			System.exit(0);
+		}
 	}
 
 	public boolean addTrain(Train t) {
 		return this.trains.add(t);
 	}
 
-	public boolean removeSpace(Train t) {
+	public boolean removeTrain(Train t) {
 		return this.trains.remove(t);
 	}
 
+	public boolean addStation(Station s) {
+		return this.stations.add(s);
+	}
+
+	public void addPassengersNotLoaded(int qtty) {
+		this.passengersNotLoaded += qtty;
+	}
 }
