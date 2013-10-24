@@ -92,7 +92,7 @@ public class Station extends SubwaySpace {
 			while (passangersToStart.size() > 0 && trainToStart.passengerIn(passangersToStart.peek())) {
 				passangersToStart.poll();
 			}
-			SubwayMap.getInstance().addPassengersNotLoaded(passangersToStart.size());
+			SubwayMap.getInstance().addPassengersNotLoaded(this.line.getLineLetter(), passangersToStart.size());
 			timeToLeaveToStart = null;
 			getNextToStart().trainArrival(trainToStart, timestamp);
 			trainToStart = null;
@@ -103,7 +103,7 @@ public class Station extends SubwaySpace {
 			while (passangersToEnd.size() > 0 && trainToEnd.passengerIn(passangersToEnd.peek())) {
 				passangersToEnd.poll();
 			}
-			SubwayMap.getInstance().addPassengersNotLoaded(passangersToEnd.size());
+			SubwayMap.getInstance().addPassengersNotLoaded(this.line.getLineLetter(), passangersToEnd.size());
 			// Setted before calling trainArrival because if not it would
 			// resolve in a bounce-back
 			// stack overflow due to calling in event -> trainArrival

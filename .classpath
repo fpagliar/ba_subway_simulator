@@ -8,5 +8,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="/home/fede/workspaceJuno/ba_subway_simulator/slick/lib/slick.jar"/>
+	<classpathentry kind="lib" path="/home/fede/workspaceJuno/ba_subway_simulator/jfreechart-1.0.16/lib/jcommon-1.0.20.jar"/>
+	<classpathentry kind="lib" path="/home/fede/workspaceJuno/ba_subway_simulator/jfreechart-1.0.16/lib/jfreechart-1.0.16.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

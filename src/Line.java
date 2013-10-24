@@ -9,13 +9,15 @@ public class Line {
 	private Integer[] xaxis;
 	private Integer[] yaxis;
 	private Integer[] lengths;
+	private SubwayMap.Lines line;
 
-	public Line(String[] names, Integer[] xaxis, Integer[] yaxis, Integer[] lengths) throws Exception {
+	public Line(String[] names, Integer[] xaxis, Integer[] yaxis, Integer[] lengths, SubwayMap.Lines line) throws Exception {
 		this.names = names;
 		this.xaxis = xaxis;
 		this.yaxis = yaxis;
 		this.lengths = lengths;
 		stations = new ArrayList<Station>();
+		this.line = line;
 
 		if(names.length != lengths.length)
 			System.out.println(names[0] + " l1:" + names.length + " l2:" + lengths.length);
@@ -72,5 +74,9 @@ public class Line {
 
 		stations.get(0).getNextToStart().setDefaultName();
 
+	}
+	
+	public SubwayMap.Lines getLineLetter() {
+		return this.line;
 	}
 }

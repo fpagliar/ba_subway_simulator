@@ -17,7 +17,10 @@ import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
 public class SubwayMap {
-
+	
+	public enum Lines{
+		A, B, C, D, E, H;
+	}
 	/** The texture that will hold the image details */
 	private Texture texture;
 	private Graphics graphics;
@@ -26,7 +29,12 @@ public class SubwayMap {
 	private List<Station> stations;
 	private Font font;
 	private TrueTypeFont ttf;
-	private int passengersNotLoaded = 0;
+	private int passengersNotLoadedA = 0;
+	private int passengersNotLoadedB = 0;
+	private int passengersNotLoadedC = 0;
+	private int passengersNotLoadedD = 0;
+	private int passengersNotLoadedE = 0;
+	private int passengersNotLoadedH = 0;
 
 	public static SubwayMap getInstance() {
 		if (subwayMap == null)
@@ -141,7 +149,7 @@ public class SubwayMap {
 			ttf.drawString(s.getX() - 5, s.getY() - 20, s.getTotalPassengers().toString(), c);
 		}
 		graphics.setColor(Color.black);
-		ttf.drawString(10, 10, "Pasajeros no subidos: " + Integer.toString(passengersNotLoaded), Color.black);
+//		ttf.drawString(10, 10, "Pasajeros no subidos: " + Integer.toString(passengersNotLoaded), Color.black);
 		Display.update();
 		Display.sync(100);
 		if (Display.isCloseRequested()) {
@@ -161,7 +169,54 @@ public class SubwayMap {
 		return this.stations.add(s);
 	}
 
-	public void addPassengersNotLoaded(int qtty) {
-		this.passengersNotLoaded += qtty;
+	public void addPassengersNotLoaded(Lines line, int qtty) {
+		switch (line) {
+		case A:
+			passengersNotLoadedA += qtty;
+			break;
+		case B:
+			passengersNotLoadedB += qtty;
+			break;
+		case C:
+			passengersNotLoadedC += qtty;
+			break;
+		case D:
+			passengersNotLoadedD += qtty;
+			break;
+		case E:
+			passengersNotLoadedE += qtty;
+			break;
+		case H:
+			passengersNotLoadedH += qtty;
+			break;
+
+		default:
+			break;
+		}
 	}
+	
+	public int getPassengersNotLoadedA() {
+		return passengersNotLoadedA;
+	}
+
+	public int getPassengersNotLoadedB() {
+		return passengersNotLoadedB;
+	}
+
+	public int getPassengersNotLoadedC() {
+		return passengersNotLoadedC;
+	}
+
+	public int getPassengersNotLoadedD() {
+		return passengersNotLoadedD;
+	}
+
+	public int getPassengersNotLoadedE() {
+		return passengersNotLoadedE;
+	}
+
+	public int getPassengersNotLoadedH() {
+		return passengersNotLoadedH;
+	}
+
 }
