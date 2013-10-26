@@ -5,90 +5,98 @@ import org.newdawn.slick.Color;
 
 public class Train {
 
-	public enum Direction{
+	public enum Direction {
 		TO_END, TO_START;
 	}
-	
+
 	private List<Person> passengers;
 	private int size;
 	private String name;
 	private Direction direction;
 	private float x;
 	private float y;
-	
-	public Train(String name){
+	private Line line;
+
+	public Train(String name, Line line) {
 		this.name = name;
+		this.line = line;
 		passengers = new ArrayList<Person>();
 		size = 100;
 		direction = Direction.TO_END;
 		SubwayMap.getInstance().addTrain(this);
 	}
-	
-	public boolean passengerIn(Person p){
-		if(passengers.size() < size){
+
+	public boolean passengerIn(Person p) {
+		if (passengers.size() < size) {
 			passengers.add(p);
 			return true;
 		}
 		return false;
 	}
 
-	public Direction getDirection(){
+	public Direction getDirection() {
 		return direction;
 	}
-	
-	public String getName(){
+
+	public String getName() {
 		return name;
 	}
-	
-	public void passengerOut(Person p){
+
+	public void passengerOut(Person p) {
 		p.descend();
 		passengers.remove(p);
 	}
-	
-	public List<Person> getPassangers(){
+
+	public List<Person> getPassangers() {
 		return passengers;
 	}
-	
-	public void descendPassengers(Station actual){
+
+	public void descendPassengers(Station actual) {
 		List<Person> downloaders = new ArrayList<Person>();
-		for(Person p: passengers)
+		for (Person p : passengers)
 			if (p.hasToDecend(actual))
 				downloaders.add(p);
-		
-		for (Person p: downloaders){
+
+		for (Person p : downloaders) {
 			passengerOut(p);
 		}
 
-//		System.out.println("Downloading passangers in " + actual.name + " #:" + downloaders.size());
+		// System.out.println("Downloading passangers in " + actual.name + " #:"
+		// + downloaders.size());
 		return;
 	}
-	
-	public void reverse(){
-		if(direction == Direction.TO_END)
+
+	public void reverse() {
+		if (direction == Direction.TO_END)
 			direction = Direction.TO_START;
 		else
 			direction = Direction.TO_END;
 	}
 
-	public String toString(){
+	public String toString() {
 		return getName();
 	}
-	
-	public float getX(){
+
+	public float getX() {
 		return x;
 	}
-	
-	public float getY(){
+
+	public float getY() {
 		return y;
 	}
-	
-	public Color getColor(){
-		if(getDirection() == Direction.TO_START)
+
+	public Color getColor() {
+		if (getDirection() == Direction.TO_START)
 			return Color.magenta;
 		return Color.black;
 	}
-	public void setPosition(float x, float y){
+
+	public void setPosition(float x, float y) {
 		this.x = x;
 		this.y = y;
+	}
+
+	public Line getLine() {
+		return this.line;
 	}
 }

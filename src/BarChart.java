@@ -30,7 +30,7 @@ public class BarChart extends ApplicationFrame {
         final CategoryDataset dataset = createDataset();
         final JFreeChart chart = createChart(dataset);
         final ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new Dimension(400, 350));
+        chartPanel.setPreferredSize(new Dimension(300, 300));
         setContentPane(chartPanel);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
@@ -51,7 +51,7 @@ public class BarChart extends ApplicationFrame {
         final String seriesH = "H";
 
         // column keys...
-        final String category1 = "1 Formacion";
+        final String category1 = "";
         final String category2 = "2 Formaciones";
         final String category3 = "3 Formaciones";
         final String category4 = "4 Formaciones";
@@ -111,7 +111,7 @@ public class BarChart extends ApplicationFrame {
         
         // create the chart...
         final JFreeChart chart = ChartFactory.createBarChart(
-            "Pasajeros no subidos",         // chart title
+            "",         // chart title
             "Linea",               // domain axis label
             "Cantidad",                  // range axis label
             dataset,                  // data

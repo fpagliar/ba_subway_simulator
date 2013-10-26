@@ -9,18 +9,20 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
-import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
 public class SubwayMap {
-	
-	public enum Lines{
+
+	public enum Lines {
 		A, B, C, D, E, H;
 	}
+
 	/** The texture that will hold the image details */
 	private Texture texture;
 	private Graphics graphics;
@@ -35,14 +37,23 @@ public class SubwayMap {
 	private int passengersNotLoadedD = 0;
 	private int passengersNotLoadedE = 0;
 	private int passengersNotLoadedH = 0;
+	private Image arrow_right;
+	private Image arrow_left;
+	private Image arrow_up;
+	private Image arrow_down;
 
 	public static SubwayMap getInstance() {
-		if (subwayMap == null)
-			subwayMap = new SubwayMap();
+		if (subwayMap == null) {
+			try {
+				subwayMap = new SubwayMap();
+			} catch (SlickException e) {
+				e.printStackTrace();
+			}
+		}
 		return subwayMap;
 	}
 
-	private SubwayMap() {
+	private SubwayMap() throws SlickException {
 		graphics = new Graphics();
 		Graphics.setCurrent(graphics);
 		trains = new ArrayList<Train>();
@@ -55,6 +66,14 @@ public class SubwayMap {
 	public void start() {
 		initGL(928, 700);
 		init();
+		try {
+			arrow_down = new Image("resources/icon_arrow_down.gif");
+			arrow_up = new Image("resources/icon_arrow_up.gif");
+			arrow_left = new Image("resources/icon_arrow_left.gif");
+			arrow_right = new Image("resources/icon_arrow_right.gif");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
 
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
 		render();
@@ -109,7 +128,8 @@ public class SubwayMap {
 	private void init() {
 
 		try {
-			texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("resources/mapa_estaciones2.png"));
+			texture = TextureLoader.getTexture("PNG", ResourceLoader
+					.getResourceAsStream("resources/mapa_estaciones2.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -135,8 +155,24 @@ public class SubwayMap {
 		GL11.glVertex2f(0, texture.getTextureHeight());
 		GL11.glEnd();
 		for (Train t : trains) {
-			graphics.setColor(t.getColor());
-			graphics.fill(new Circle(t.getX(), t.getY(), 5));
+			// graphics.setColor(t.getColor());
+			// graphics.fill(new Circle(t.getX(), t.getY(), 5));
+			if (t.getLine().getLineLetter().equals(Lines.H)) {
+				if (t.getDirection() == Train.Direction.TO_END)
+					graphics.drawImage(arrow_up, t.getX() - 5, t.getY() - 7);
+				else
+					graphics.drawImage(arrow_down, t.getX() - 5, t.getY() - 7);
+			} else if (t.getLine().getLineLetter().equals(Lines.C)) {
+				if (t.getDirection() == Train.Direction.TO_START)
+					graphics.drawImage(arrow_up, t.getX() - 5, t.getY() - 7);
+				else
+					graphics.drawImage(arrow_down, t.getX() - 5, t.getY() - 7);
+			} else {
+				if (t.getDirection() == Train.Direction.TO_END)
+					graphics.drawImage(arrow_right, t.getX() - 5, t.getY() - 7);
+				else
+					graphics.drawImage(arrow_left, t.getX() - 5, t.getY() - 7);
+			}
 		}
 		for (Station s : stations) {
 			graphics.setColor(Color.white);
@@ -146,10 +182,12 @@ public class SubwayMap {
 				c = Color.green.darker();
 			else if (s.getTotalPassengers() < 100)
 				c = Color.yellow.darker((float) 0.2);
-			ttf.drawString(s.getX() - 5, s.getY() - 20, s.getTotalPassengers().toString(), c);
+			ttf.drawString(s.getX() - 5, s.getY() - 20, s.getTotalPassengers()
+					.toString(), c);
 		}
 		graphics.setColor(Color.black);
-//		ttf.drawString(10, 10, "Pasajeros no subidos: " + Integer.toString(passengersNotLoaded), Color.black);
+		// ttf.drawString(10, 10, "Pasajeros no subidos: " +
+		// Integer.toString(passengersNotLoaded), Color.black);
 		Display.update();
 		Display.sync(100);
 		if (Display.isCloseRequested()) {
@@ -194,7 +232,7 @@ public class SubwayMap {
 			break;
 		}
 	}
-	
+
 	public int getPassengersNotLoadedA() {
 		return passengersNotLoadedA;
 	}

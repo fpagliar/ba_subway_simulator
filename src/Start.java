@@ -2,6 +2,8 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
 
+import javax.swing.JFrame;
+
 import org.jfree.ui.RefineryUtilities;
 
 public class Start {
@@ -75,6 +77,11 @@ public class Start {
 	 */
 	public static void main(String[] args) throws Exception {
 
+		
+//		JFrame window = new Window();
+//			window.setVisible(true);
+//		if(true)
+//			return;
 		SubwayMap.getInstance().start();
 
 		Line[] lines = { new Line(namesA, xaxisA, yaxisA, lengthsA, SubwayMap.Lines.A),
@@ -103,7 +110,7 @@ public class Start {
 				generateChartGraphs();
 				for (Line line : lines) {
 					k++;
-					train = new Train("Start#" + k);
+					train = new Train("Start#" + k, line);
 					// for (int j = 0; j < 70; j++) {
 					// random = (int) (Math.random() * line.stations.size());
 					// p = new Person(line.stations.get(random));
@@ -112,7 +119,7 @@ public class Start {
 					line.stations.get(0).trainArrival(train,
 							SimulatorScheduler.getInstance().getTime() + 1);
 					line.stations.get(line.stations.size() - 1).trainArrival(
-							new Train("Start#" + k),
+							new Train("Start#" + k, line),
 							SimulatorScheduler.getInstance().getTime() + 1);
 				}
 				System.out
@@ -133,7 +140,7 @@ public class Start {
         RefineryUtilities.centerFrameOnScreen(chart);
         chart.setVisible(true);
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-		Point location = new Point(size.width / 2, size.height / 2);
+		Point location = new Point(size.width/2 + 250, size.height/2 - 100);
 		chart.setLocation(location);
 	}
 }
