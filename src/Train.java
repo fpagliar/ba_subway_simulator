@@ -15,12 +15,14 @@ public class Train {
 	private Direction direction;
 	private float x;
 	private float y;
+	private Line line;
 	
-	public Train(String name){
+	public Train(String name, Line line){
 		this.name = name;
 		passengers = new ArrayList<Person>();
 		size = 100;
 		direction = Direction.TO_END;
+		this.line = line;
 		SubwayMap.getInstance().addTrain(this);
 	}
 	

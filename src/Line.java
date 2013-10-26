@@ -10,17 +10,17 @@ public class Line {
 	private Integer[] yaxis;
 	private Integer[] lengths;
 	private SubwayMap.Lines line;
+	private Long frequency;
 
-	public Line(String[] names, Integer[] xaxis, Integer[] yaxis, Integer[] lengths, SubwayMap.Lines line) throws Exception {
+	public Line(String[] names, Integer[] xaxis, Integer[] yaxis, Integer[] lengths, Long frecuency, SubwayMap.Lines line) throws Exception {
 		this.names = names;
 		this.xaxis = xaxis;
 		this.yaxis = yaxis;
 		this.lengths = lengths;
 		stations = new ArrayList<Station>();
 		this.line = line;
+		this.frequency = frecuency;
 
-		if(names.length != lengths.length)
-			System.out.println(names[0] + " l1:" + names.length + " l2:" + lengths.length);
 		loadStations();
 
 		Map<Station, Integer> distribution;
@@ -52,13 +52,15 @@ public class Line {
 		throw new Exception("NO DIRECTIONS FROM " + from + " TO:" + to);
 	}
 
-	public void loadStations() {
+	public void loadStations() throws Exception {
 
 		Station currentStation = null;
-		SubwaySpace previousSpace = new BouncePoint(null);
-
+		BouncePoint bp = new BouncePoint(null, this);
+		SubwaySpace previousSpace = bp;
+		bp.getFactory().start();
+		
 		for (int i = 0; i < names.length; i++) {
-			currentStation = new Station(previousSpace, null, this, 1 + (long) (Math.random() * 10), names[i], xaxis[i], yaxis[i]);
+			currentStation = new Station(previousSpace, null, this, 20, names[i], xaxis[i], yaxis[i]);
 			if (previousSpace != null)
 				previousSpace.setNextToEnd(currentStation);
 			stations.add(currentStation);
@@ -67,7 +69,9 @@ public class Line {
 			SubwayMap.getInstance().addStation(currentStation);
 		}
 
-		currentStation.setNextToEnd(new BouncePoint(currentStation));
+		bp = new BouncePoint(currentStation, this);
+		currentStation.setNextToEnd(bp);
+		bp.getFactory().start();
 
 		for (Station s : stations)
 			s.getNextToEnd().setDefaultName();
@@ -76,7 +80,19 @@ public class Line {
 
 	}
 	
+	public Long getFrequency() {
+		return frequency;
+	}
+
 	public SubwayMap.Lines getLineLetter() {
 		return this.line;
+	}
+	
+	public Station getStart(){
+		return stations.get(0);
+	}
+	
+	public Station getEnd(){
+		return stations.get(stations.size() - 1);
 	}
 }
