@@ -6,6 +6,7 @@ import java.util.Map;
 public class SimulatorScheduler {
 
 	private Map<Long, List<SchedulerRegistrator>> jobs;
+	// The smallest time unit represented is 1s
 	private long actual_timestamp;
 	private static SimulatorScheduler instance = new SimulatorScheduler();
 

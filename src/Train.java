@@ -23,6 +23,7 @@ public class Train {
 		passengers = new ArrayList<Person>();
 		size = 100;
 		direction = Direction.TO_END;
+		this.line = line;
 		SubwayMap.getInstance().addTrain(this);
 	}
 

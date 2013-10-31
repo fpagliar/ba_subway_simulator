@@ -19,8 +19,8 @@ public class Start {
 			612, 644, 679, 724, 760, 800, 841 };
 	static Integer[] yaxisD = { 74, 74, 74, 74, 74, 74, 96, 118, 135, 155, 155,
 			185, 185, 215, 257, 298 };
-	static Integer[] lengthsD = { 100, 80, 150, 80, 30, 45, 45, 30, 38, 45, 60,
-			60, 130, 80, 20, 0 };
+	static Integer[] lengthsD = { 100, 65, 80, 95, 110, 80, 80, 65, 65, 70, 115,
+			65, 90, 65, 60, 0 };
 
 	static String[] namesB = { "Juan Manuel de Rosas", "Echeverria",
 			"Los Incas", "Tronador", "Lacroze", "Dorrego", "Malabia",
@@ -84,49 +84,35 @@ public class Start {
 //			return;
 		SubwayMap.getInstance().start();
 
-		Line[] lines = { new Line(namesA, xaxisA, yaxisA, lengthsA, SubwayMap.Lines.A),
-				new Line(namesB, xaxisB, yaxisB, lengthsB, SubwayMap.Lines.B),
-				new Line(namesC, xaxisC, yaxisC, lengthsC, SubwayMap.Lines.C),
-				new Line(namesD, xaxisD, yaxisD, lengthsD, SubwayMap.Lines.D),
-				new Line(namesE, xaxisE, yaxisE, lengthsE, SubwayMap.Lines.E),
-				new Line(namesH, xaxisH, yaxisH, lengthsH, SubwayMap.Lines.H) };
+		Line[] lines = { new Line(namesA, xaxisA, yaxisA, lengthsA, 360L, SubwayMap.Lines.A),
+				new Line(namesB, xaxisB, yaxisB, lengthsB, 300L, SubwayMap.Lines.B),
+				new Line(namesC, xaxisC, yaxisC, lengthsC, 300L, SubwayMap.Lines.C),
+				new Line(namesD, xaxisD, yaxisD, lengthsD, 180L, SubwayMap.Lines.D),
+				new Line(namesE, xaxisE, yaxisE, lengthsE, 480L, SubwayMap.Lines.E),
+				new Line(namesH, xaxisH, yaxisH, lengthsH, 600L, SubwayMap.Lines.H) };
 
-		// Train train = new Train("Start");
-		// for (int i = 0; i < 70; i++) {
-		// random = (int) (Math.random() * linea.stations.size());
-		// p = new Person(linea.stations.get(random));
-		// train.passengerIn(p);
-		// }
-
-		// first.trainArrival(train, 0L);
-		Person p = null;
-		int random = 0;
-		int k = 1;
-		Train train;
+//		Person p = null;
+//		int random = 0;
+//		int k = 1;
+//		Train train;
 		for (int i = 0; i < 1000000; i++) {
-			// System.out.println("tick");
+//			 System.out.println("tick");
 			// TimeUnit.MILLISECONDS.sleep(10);
 			if (i % 500 == 1 && i < 5000) {
 				generateChartGraphs();
-				for (Line line : lines) {
-					k++;
-					train = new Train("Start#" + k, line);
-					// for (int j = 0; j < 70; j++) {
-					// random = (int) (Math.random() * line.stations.size());
-					// p = new Person(line.stations.get(random));
-					// train.passengerIn(p);
-					// }
-					line.stations.get(0).trainArrival(train,
-							SimulatorScheduler.getInstance().getTime() + 1);
-					line.stations.get(line.stations.size() - 1).trainArrival(
-							new Train("Start#" + k, line),
-							SimulatorScheduler.getInstance().getTime() + 1);
-				}
-				System.out
-						.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
-				System.out.println("Trains in the system:" + k);
+//				for (Line line : lines) {
+//					k++;
+//					train = new Train("Start#" + k);
+//					line.stations.get(0).trainArrival(train,
+//							SimulatorScheduler.getInstance().getTime() + 1);
+//					line.stations.get(line.stations.size() - 1).trainArrival(
+//							new Train("Start#" + k),
+//							SimulatorScheduler.getInstance().getTime() + 1);
+//				}
+//				System.out
+//						.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+//				System.out.println("Trains in the system:" + k);
 			}
-
 			SimulatorScheduler.getInstance().advanceTime();
 		}
 		
@@ -140,7 +126,7 @@ public class Start {
         RefineryUtilities.centerFrameOnScreen(chart);
         chart.setVisible(true);
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-		Point location = new Point(size.width/2 + 250, size.height/2 - 100);
+		Point location = new Point(size.width / 2 + 250, size.height / 2 - 100);
 		chart.setLocation(location);
 	}
 }
