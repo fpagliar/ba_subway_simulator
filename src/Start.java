@@ -21,6 +21,8 @@ public class Start {
 			185, 185, 215, 257, 298 };
 	static Integer[] lengthsD = { 100, 65, 80, 95, 110, 80, 80, 65, 65, 70, 115,
 			65, 90, 65, 60, 0 };
+	// frecuencias, por hora, desde las 5 hasta las 23
+	static Integer[] frequencyD = {300, 300, 190, 175, 175, 210, 210, 210, 210, 210, 210, 175, 175, 195, 195, 320, 320, 320};
 
 	static String[] namesB = { "Juan Manuel de Rosas", "Echeverria",
 			"Los Incas", "Tronador", "Lacroze", "Dorrego", "Malabia",
@@ -33,6 +35,7 @@ public class Start {
 			243, 243, 243, 243, 243, 243, 243, 243 };
 	static Integer[] lengthsB = { 70, 85, 100, 30, 120, 150, 80, 60, 45, 55,
 			60, 40, 30, 70, 60, 50, 0 };
+	static Integer[] frequencyB = {360, 360, 245, 195, 195, 270, 270, 270, 270, 270, 270, 195, 195, 205, 205, 330, 330, 330};
 
 	static String[] namesC = { "Retiro", "San Martin", "Lavalle",
 			"Diagonal Norte", "Avenida de Mayo", "Moreno", "Independencia",
@@ -40,6 +43,7 @@ public class Start {
 	static Integer[] xaxisC = { 870, 844, 821, 812, 791, 791, 791, 791, 791 };
 	static Integer[] yaxisC = { 137, 163, 222, 270, 319, 359, 436, 493, 575 };
 	static Integer[] lengthsC = { 40, 70, 60, 80, 40, 100, 80, 100, 0 };
+	static Integer[] frequencyC = {270, 270, 215, 215, 215, 265, 265, 265, 265, 265, 265, 215, 215, 215, 215, 270, 270, 270};
 
 	static String[] namesA = { "San Pedrito", "San Jose de Flores", "Carabobo",
 			"Puan", "Primera Junta", "Acoyte", "Rio de Janeiro",
@@ -52,6 +56,7 @@ public class Start {
 			319, 319, 319, 319, 319, 319, 319, 319 };
 	static Integer[] lengthsA = { 90, 30, 60, 180, 100, 80, 50, 70, 60, 40, 40,
 			30, 25, 40, 10, 30, 0 };
+	static Integer[] frequencyA = {0, 450, 265, 175, 175, 265, 265, 265, 265, 265, 265, 295, 295, 175, 175, 420, 420, 420};
 
 	static String[] namesE = { "Plaza de los Virreyes", "Varela",
 			"Medalla Milagrosa", "Emilio Mitre", "Jose M. Moreno",
@@ -64,12 +69,14 @@ public class Start {
 			494, 494, 494, 436, 376, 340 };
 	static Integer[] lengthsE = { 50, 80, 60, 90, 50, 70, 40, 40, 40, 50, 35,
 			75, 75, 50, 0 };
+	static Integer[] frequencyE = {460, 460, 355, 310, 310, 480, 480, 480, 480, 480, 480, 245, 245, 245, 245, 460, 460};
 
 	static String[] namesH = { "Hospitales", "Parque Patricios", "Caseros",
 			"Inclan", "Humberto 1", "Venezuela", "Once", "Corrientes" };
 	static Integer[] xaxisH = { 592, 618, 646, 646, 646, 646, 646, 646 };
 	static Integer[] yaxisH = { 658, 640, 629, 584, 480, 403, 303, 227 };
 	static Integer[] lengthsH = { 30, 40, 50, 120, 100, 80, 30, 0 };
+	static Integer[] frequencyH = {270, 270, 215, 215, 215, 265, 265, 265, 265, 265, 265, 215, 215, 215, 215, 270, 270, 270};
 
 	/**
 	 * @param args
@@ -84,34 +91,18 @@ public class Start {
 //			return;
 		SubwayMap.getInstance().start();
 
-		Line[] lines = { new Line(namesA, xaxisA, yaxisA, lengthsA, 360L, SubwayMap.Lines.A),
-				new Line(namesB, xaxisB, yaxisB, lengthsB, 300L, SubwayMap.Lines.B),
-				new Line(namesC, xaxisC, yaxisC, lengthsC, 300L, SubwayMap.Lines.C),
-				new Line(namesD, xaxisD, yaxisD, lengthsD, 180L, SubwayMap.Lines.D),
-				new Line(namesE, xaxisE, yaxisE, lengthsE, 480L, SubwayMap.Lines.E),
-				new Line(namesH, xaxisH, yaxisH, lengthsH, 600L, SubwayMap.Lines.H) };
+		Line[] lines = { new Line(namesA, xaxisA, yaxisA, lengthsA, frequencyA, SubwayMap.Lines.A),
+				new Line(namesB, xaxisB, yaxisB, lengthsB, frequencyB, SubwayMap.Lines.B),
+				new Line(namesC, xaxisC, yaxisC, lengthsC, frequencyC, SubwayMap.Lines.C),
+				new Line(namesD, xaxisD, yaxisD, lengthsD, frequencyD, SubwayMap.Lines.D),
+				new Line(namesE, xaxisE, yaxisE, lengthsE, frequencyE, SubwayMap.Lines.E),
+				new Line(namesH, xaxisH, yaxisH, lengthsH, frequencyH, SubwayMap.Lines.H) };
 
-//		Person p = null;
-//		int random = 0;
-//		int k = 1;
-//		Train train;
 		for (int i = 0; i < 1000000; i++) {
 //			 System.out.println("tick");
 			// TimeUnit.MILLISECONDS.sleep(10);
 			if (i % 500 == 1 && i < 5000) {
 				generateChartGraphs();
-//				for (Line line : lines) {
-//					k++;
-//					train = new Train("Start#" + k);
-//					line.stations.get(0).trainArrival(train,
-//							SimulatorScheduler.getInstance().getTime() + 1);
-//					line.stations.get(line.stations.size() - 1).trainArrival(
-//							new Train("Start#" + k),
-//							SimulatorScheduler.getInstance().getTime() + 1);
-//				}
-//				System.out
-//						.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
-//				System.out.println("Trains in the system:" + k);
 			}
 			SimulatorScheduler.getInstance().advanceTime();
 		}

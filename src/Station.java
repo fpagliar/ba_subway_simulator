@@ -33,13 +33,6 @@ public class Station extends SubwaySpace {
 
 	@Override
 	public void trainArrival(Train train, Long timestamp) throws Exception {
-		// System.out.println("++++++++++++++++++++++");
-		// System.out.println("Train arriving to station: " + getName() +
-		// " direction:" + train.getDirection() + " passengers:"
-		// + train.getPassangers().size() + " time: " + timestamp + " leaving:"
-		// + (timestamp + getActivityDuration()));
-		// System.out.println("++++++++++++++++++++++");
-
 		train.setPosition(getX(), getY());
 
 		// if I have a pending event this moment, first execute it in order to
@@ -83,10 +76,6 @@ public class Station extends SubwaySpace {
 	@Override
 	public void event(Long timestamp) throws Exception {
 		// removeFromMap();
-		// System.out.println(".......... station event ................");
-		// System.out.println("Station:" + getName());
-		// System.out.println("timeToLeaveStart:" + timeToLeaveToStart +
-		// " timeToLeaveToend:" + timeToLeaveToEnd + " time:" + timestamp);
 		if (timeToLeaveToStart != null && timeToLeaveToStart.equals(timestamp)) {
 			trainToStart.descendPassengers(this);
 			while (passangersToStart.size() > 0 && trainToStart.passengerIn(passangersToStart.peek())) {
@@ -112,7 +101,6 @@ public class Station extends SubwaySpace {
 			getNextToEnd().trainArrival(trainToEnd, timestamp);
 			trainToEnd = null;
 		}
-		// System.out.println(".................................");
 	}
 
 	public Integer getTotalPassengers() {

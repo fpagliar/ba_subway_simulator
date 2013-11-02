@@ -1,3 +1,4 @@
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +12,7 @@ public class SimulatorScheduler {
 	private static SimulatorScheduler instance = new SimulatorScheduler();
 
 	private SimulatorScheduler() {
-		jobs = new HashMap<Long, List<SchedulerRegistrator>>();
+		jobs = new HashMap<Long, List<SchedulerRegistrator>>(1000);
 		actual_timestamp = 0;
 	}
 
@@ -26,7 +27,6 @@ public class SimulatorScheduler {
 	public void registerEvent(Long timestamp, SchedulerRegistrator listener) throws Exception {
 		if(timestamp == actual_timestamp)
 			throw new Exception("Impossible to register event in the same moment! time:" + timestamp + " listener:" + listener);
-//		System.out.println("register event - " + listener.getDescription() );
 
 		if (timestamp < actual_timestamp)
 			throw new Exception("Invalid time" + timestamp + " for object " + listener + " actual_time" + actual_timestamp);
@@ -40,7 +40,6 @@ public class SimulatorScheduler {
 	}
 	
 	public void deleteEvent(Long timestamp, SimulatorObject listener){
-//		System.out.println("deleting event - time: " + timestamp + " listener: " + listener);
 		List<SchedulerRegistrator> list = jobs.get(timestamp);
 		if(list != null)
 			list.remove(listener);
@@ -52,21 +51,16 @@ public class SimulatorScheduler {
 			return;
 		
 		while ( !jobs.containsKey(actual_timestamp)){
-//			System.out.println("------------------------------");
-//			System.out.println("Advancing time: " + actual_timestamp);
-//			System.out.println("------------------------------");
 			actual_timestamp++;
 		}
 		
 		for (SchedulerRegistrator obj : jobs.get(actual_timestamp)){
-//			System.out.println("eventing - " + obj.getDescription());
-			obj.getObject().event(actual_timestamp);			
+			obj.getObject().event(actual_timestamp);
 		}
 
+		System.out.println("TIME - " + actual_timestamp/3600 + ":" + (actual_timestamp%3600)/60 + ":" + ((actual_timestamp%3600)%60));
+		
 		jobs.remove(actual_timestamp);
 		actual_timestamp++;
-//		System.out.println("------------------------------");
-//		System.out.println("Advancing time: " + actual_timestamp);
-//		System.out.println("------------------------------");
 	}
 }

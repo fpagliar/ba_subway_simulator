@@ -10,9 +10,9 @@ public class Line {
 	private Integer[] yaxis;
 	private Integer[] lengths;
 	private SubwayMap.Lines line;
-	private Long frequency;
+	private Integer[] frequency;
 
-	public Line(String[] names, Integer[] xaxis, Integer[] yaxis, Integer[] lengths, Long frecuency, SubwayMap.Lines line) throws Exception {
+	public Line(String[] names, Integer[] xaxis, Integer[] yaxis, Integer[] lengths, Integer[] frecuency, SubwayMap.Lines line) throws Exception {
 		this.names = names;
 		this.xaxis = xaxis;
 		this.yaxis = yaxis;
@@ -22,6 +22,7 @@ public class Line {
 		this.frequency = frecuency;
 
 		loadStations();
+		loadTrains();
 
 		Map<Station, Integer> distribution;
 		for (Station s : stations) {
@@ -30,7 +31,7 @@ public class Line {
 				if (!s2.equals(s))
 					distribution.put(s2, (int) (Math.random() * 10));
 			}
-			PersonArrivalSimulator a = new PersonArrivalSimulator(3L, s, distribution);
+			PersonArrivalSimulator a = new PersonArrivalSimulator(10L, s, distribution);
 			a.start(0L);
 		}
 	}
@@ -52,12 +53,11 @@ public class Line {
 		throw new Exception("NO DIRECTIONS FROM " + from + " TO:" + to);
 	}
 
-	public void loadStations() throws Exception {
+	private void loadStations() throws Exception {
 
 		Station currentStation = null;
 		BouncePoint bp = new BouncePoint(null, this);
 		SubwaySpace previousSpace = bp;
-		bp.getFactory().start();
 		
 		for (int i = 0; i < names.length; i++) {
 			currentStation = new Station(previousSpace, null, this, 20, names[i], xaxis[i], yaxis[i]);
@@ -71,7 +71,6 @@ public class Line {
 
 		bp = new BouncePoint(currentStation, this);
 		currentStation.setNextToEnd(bp);
-		bp.getFactory().start();
 
 		for (Station s : stations)
 			s.getNextToEnd().setDefaultName();
@@ -80,10 +79,17 @@ public class Line {
 
 	}
 	
-	public Long getFrequency() {
-		return frequency;
+	private void loadTrains() throws Exception{
+		for(int i = 0; i < frequency.length; i++)
+			if(frequency[i] > 0)
+				for(int j = 1; j < 3600; j+= frequency[i]){
+					// although may seem obvious, it is important to keep in mind. When loading trains on START-STATION
+					// the direction should be TO_END!!
+					SimulatorScheduler.getInstance().registerEvent((long)j + i * 3600, new SchedulerRegistrator( new Train(getLineLetter() + ": start - " + i + ":" + j/60 + ":" + j%60, this, getStart(), Train.Direction.TO_END), "Train is going to start its trip"));
+					SimulatorScheduler.getInstance().registerEvent((long)j + i * 3600, new SchedulerRegistrator( new Train(getLineLetter() + ": end - " + i + ":" + j/60 + ":" + j%60, this, getEnd(), Train.Direction.TO_START), "Train is going to start its trip"));
+				}
 	}
-
+	
 	public SubwayMap.Lines getLineLetter() {
 		return this.line;
 	}

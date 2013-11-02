@@ -3,7 +3,7 @@ import java.util.List;
 
 import org.newdawn.slick.Color;
 
-public class Train {
+public class Train implements SimulatorObject {
 
 	public enum Direction {
 		TO_END, TO_START;
@@ -16,15 +16,16 @@ public class Train {
 	private float x;
 	private float y;
 	private Line line;
-
-	public Train(String name, Line line) {
+	private Station start;
+	
+	public Train(String name, Line line, Station start, Direction direction){
 		this.name = name;
 		this.line = line;
 		passengers = new ArrayList<Person>();
 		size = 100;
-		direction = Direction.TO_END;
+		this.direction = direction;
 		this.line = line;
-		SubwayMap.getInstance().addTrain(this);
+		this.start = start;
 	}
 
 	public boolean passengerIn(Person p) {
@@ -62,8 +63,6 @@ public class Train {
 			passengerOut(p);
 		}
 
-		// System.out.println("Downloading passangers in " + actual.name + " #:"
-		// + downloaders.size());
 		return;
 	}
 
@@ -99,5 +98,11 @@ public class Train {
 
 	public Line getLine() {
 		return this.line;
+	}
+
+		@Override
+	public void event(Long timestamp) throws Exception {
+		SubwayMap.getInstance().addTrain(this);
+		start.trainArrival(this, timestamp);
 	}
 }

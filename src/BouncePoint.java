@@ -1,22 +1,14 @@
-import java.util.LinkedList;
-import java.util.Queue;
 
 
 public class BouncePoint extends SubwaySpace {
 	
 	private Line line;
-	private TrainFactory factory;
 	
 	public BouncePoint(Station previousAndNext, Line line) {
 		super(previousAndNext, previousAndNext, 0, "");
-		this.factory = new TrainFactory(this);
 		this.line = line;
 	}
 	
-	public TrainFactory getFactory() {
-		return factory;
-	}
-
 	public String getName(){
 		return getNextToEnd().getName() + " - bouncepoint";
 	}
@@ -26,17 +18,14 @@ public class BouncePoint extends SubwaySpace {
 //		throw new Exception("Not implemented");
 	}
 
-	public void trainArrival(Train train, Long timestamp, boolean factoryCall) throws Exception {
-		if(!factoryCall)
-			factory.trainArrival();
-		train.reverse();
-		getNextToEnd().trainArrival(train, timestamp);
-	}
-
-	@Override
 	public void trainArrival(Train train, Long timestamp) throws Exception {
-		trainArrival(train, timestamp, false);
-//		SimulatorScheduler.getInstance().registerEvent(startTimes.poll(), new SchedulerRegistrator(this, "Train starting from " + getName() + " at " + timestamp));
+		if(train.getPassangers().size() != 0)
+			throw new Exception("Passengers still in the train! + qty:" + train.getPassangers().size());
+		SubwayMap.getInstance().removeTrain(train);
+//		System.out.println("TRAIN ARRIVING AT BOUNCE POINT: " + train.getName());
+		// trains now fall over the edge!!
+//		train.reverse();
+//		getNextToEnd().trainArrival(train, timestamp);
 	}
 
 	@Override
