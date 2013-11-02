@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.newdawn.slick.Color;
@@ -9,8 +10,9 @@ public class Train implements SimulatorObject {
 		TO_END, TO_START;
 	}
 
-	private List<Person> passengers;
+	private HashMap<Station, List<Person>> passengers;
 	private int size;
+	private int actual_passengers;
 	private String name;
 	private Direction direction;
 	private float x;
@@ -21,16 +23,20 @@ public class Train implements SimulatorObject {
 	public Train(String name, Line line, Station start, Direction direction){
 		this.name = name;
 		this.line = line;
-		passengers = new ArrayList<Person>();
+		passengers = new HashMap<Station, List<Person>>();
 		size = 100;
 		this.direction = direction;
 		this.line = line;
 		this.start = start;
+		this.actual_passengers = 0;
 	}
 
 	public boolean passengerIn(Person p) {
-		if (passengers.size() < size) {
-			passengers.add(p);
+		if (actual_passengers <= size) {
+			if(!passengers.containsKey(p.getDestiny()))
+				passengers.put(p.getDestiny(), new ArrayList<Person>());
+			passengers.get(p.getDestiny()).add(p);
+			actual_passengers++;
 			return true;
 		}
 		return false;
@@ -44,24 +50,17 @@ public class Train implements SimulatorObject {
 		return name;
 	}
 
-	public void passengerOut(Person p) {
-		p.descend();
-		passengers.remove(p);
+	public boolean hasPassengers(){
+		return actual_passengers != 0;
 	}
-
-	public List<Person> getPassangers() {
-		return passengers;
-	}
-
+	
 	public void descendPassengers(Station actual) {
-		List<Person> downloaders = new ArrayList<Person>();
-		for (Person p : passengers)
-			if (p.hasToDecend(actual))
-				downloaders.add(p);
-
-		for (Person p : downloaders) {
-			passengerOut(p);
-		}
+		if(!passengers.containsKey(actual))
+			return;
+		for(Person p : passengers.get(actual))
+			p.descend();
+		actual_passengers -= passengers.get(actual).size();
+		passengers.remove(actual);
 
 		return;
 	}
@@ -100,7 +99,7 @@ public class Train implements SimulatorObject {
 		return this.line;
 	}
 
-		@Override
+	@Override
 	public void event(Long timestamp) throws Exception {
 		SubwayMap.getInstance().addTrain(this);
 		start.trainArrival(this, timestamp);

@@ -58,6 +58,7 @@ public class SimulatorScheduler {
 			obj.getObject().event(actual_timestamp);
 		}
 
+//		System.out.println(actual_timestamp);
 		System.out.println("TIME - " + actual_timestamp/3600 + ":" + (actual_timestamp%3600)/60 + ":" + ((actual_timestamp%3600)%60));
 		
 		jobs.remove(actual_timestamp);
