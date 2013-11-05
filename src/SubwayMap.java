@@ -41,6 +41,7 @@ public class SubwayMap {
 	private Image arrow_left;
 	private Image arrow_up;
 	private Image arrow_down;
+	private long time = 0;
 
 	public static SubwayMap getInstance() {
 		if (subwayMap == null) {
@@ -186,7 +187,8 @@ public class SubwayMap {
 					.toString(), c);
 		}
 		graphics.setColor(Color.black);
-		// ttf.drawString(10, 10, "Pasajeros no subidos: " +
+		ttf.drawString(10, 10, time / 3600 + ":" + (time % 3600) / 60 + ":"
+				+ ((time % 3600) % 60), Color.black);
 		// Integer.toString(passengersNotLoaded), Color.black);
 		Display.update();
 		Display.sync(100);
@@ -255,6 +257,10 @@ public class SubwayMap {
 
 	public int getPassengersNotLoadedH() {
 		return passengersNotLoadedH;
+	}
+
+	public void setTime(long time) {
+		this.time = time;
 	}
 
 }

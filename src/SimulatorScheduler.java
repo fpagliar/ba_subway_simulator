@@ -1,4 +1,3 @@
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +45,7 @@ public class SimulatorScheduler {
 	}
 
 	public void advanceTime() throws Exception {
+		SubwayMap.getInstance().setTime(actual_timestamp + 5 * 3600);
 		SubwayMap.getInstance().render();
 		if(jobs.isEmpty())
 			return;
@@ -59,7 +59,7 @@ public class SimulatorScheduler {
 		}
 
 //		System.out.println(actual_timestamp);
-		System.out.println("TIME - " + actual_timestamp/3600 + ":" + (actual_timestamp%3600)/60 + ":" + ((actual_timestamp%3600)%60));
+		//System.out.println("TIME - " + actual_timestamp/3600 + ":" + (actual_timestamp%3600)/60 + ":" + ((actual_timestamp%3600)%60));
 		
 		jobs.remove(actual_timestamp);
 		actual_timestamp++;
