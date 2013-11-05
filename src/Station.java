@@ -34,7 +34,8 @@ public class Station extends SubwaySpace {
 	@Override
 	public void trainArrival(Train train, Long timestamp) throws Exception {
 		train.setPosition(getX(), getY());
-
+		
+		//		System.out.println("Train arrived in: " + getName() + " at: " + timestamp);
 		// if I have a pending event this moment, first execute it in order to
 		// free the space for the new train
 		if (timeToLeaveToEnd == timestamp || timeToLeaveToStart == timestamp) {
@@ -44,7 +45,7 @@ public class Station extends SubwaySpace {
 
 		if (train.getDirection().equals(Train.Direction.TO_END)) {
 			if (trainToEnd != null)
-				throw new Exception("Trains crashed in" + getName() + "-> entered: " + train.getName() + " in station was: " + trainToEnd.getName());
+				throw new Exception("Trains crashed in " + getName() + "-> entered: " + train.getName() + " in station was: " + trainToEnd.getName() + " duration:" + getActivityDuration() + " time entered:" + timeToLeaveToEnd + " actual time: " + timestamp);
 			trainToEnd = train;
 			timeToLeaveToEnd = timestamp + getActivityDuration();
 			SimulatorScheduler.getInstance().registerEvent(
@@ -55,7 +56,7 @@ public class Station extends SubwaySpace {
 		}
 
 		if (trainToStart != null)
-			throw new Exception("Trains crashed in" + getName() + "-> entered: " + train.getName() + " in station was: " + trainToStart.getName());
+			throw new Exception("Trains crashed in " + getName() + "-> entered: " + train.getName() + " in station was: " + trainToStart.getName() + " time:" + timestamp + " time to leave to start:" + timeToLeaveToStart + " duration:" + getActivityDuration());
 
 		trainToStart = train;
 		timeToLeaveToStart = timestamp + getActivityDuration();
@@ -75,7 +76,11 @@ public class Station extends SubwaySpace {
 
 	@Override
 	public void event(Long timestamp) throws Exception {
+		if(timeToLeaveToEnd != null && timeToLeaveToEnd.equals(timeToLeaveToStart))
+			System.out.println("TRAINS LEAVING AT THE SAME TIME IN:" + getName() + " at:" + timeToLeaveToEnd);
+//			throw new Exception("TO");
 		// removeFromMap();
+//		System.out.println("Trains leaving station:" + getName() + " at:" + timestamp);
 		if (timeToLeaveToStart != null && timeToLeaveToStart.equals(timestamp)) {
 			trainToStart.descendPassengers(this);
 			while (passangersToStart.size() > 0 && trainToStart.passengerIn(passangersToStart.peek())) {
@@ -107,4 +112,17 @@ public class Station extends SubwaySpace {
 		return passangersToEnd.size() + passangersToStart.size();
 	}
 
+	@Override
+	public int hashCode() {
+		return line.getPos(this);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Station ){
+			Station other = (Station) obj;
+			return getName().equals(other.getName());
+		}
+		return false;
+	}
 }

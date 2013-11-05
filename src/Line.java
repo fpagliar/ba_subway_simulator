@@ -101,4 +101,14 @@ public class Line {
 	public Station getEnd(){
 		return stations.get(stations.size() - 1);
 	}
+	
+	public int getPos(Station target){
+		int i = 0;
+		for(Station s: stations){
+			i++;
+			if(s.equals(target))
+				return i;
+		}
+		return -1;
+	}
 }
