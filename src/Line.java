@@ -94,6 +94,15 @@ public class Line {
 		return this.line;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Line ){
+			Line other = (Line) obj;
+			return getLineLetter().equals(other.getLineLetter());
+		}
+		return false;
+	}
+	
 	public Station getStart(){
 		return stations.get(0);
 	}

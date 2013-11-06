@@ -54,7 +54,7 @@ public class Start {
 			319, 319, 319, 319, 319, 319, 319, 319 };
 	static Integer[] lengthsA = { 90, 30, 60, 180, 100, 80, 50, 70, 60, 40, 40,
 			30, 25, 40, 10, 30, 0 };
-	static Integer[] frequencyA = {0, 450, 265, 175, 175, 265, 265, 265, 265, 265, 265, 295, 295, 175, 175, 420, 420, 420};
+	static Integer[] frequencyA = {450, 450, 265, 175, 175, 265, 265, 265, 265, 265, 265, 295, 295, 175, 175, 420, 420, 420};
 
 	static String[] namesE = { "Plaza de los Virreyes", "Varela",
 			"Medalla Milagrosa", "Emilio Mitre", "Jose M. Moreno",
