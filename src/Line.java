@@ -11,8 +11,9 @@ public class Line {
 	private Integer[] lengths;
 	private SubwayMap.Lines line;
 	private Integer[] frequency;
+	private Integer[] personArrivalChance;
 
-	public Line(String[] names, Integer[] xaxis, Integer[] yaxis, Integer[] lengths, Integer[] frecuency, SubwayMap.Lines line) throws Exception {
+	public Line(String[] names, Integer[] xaxis, Integer[] yaxis, Integer[] personArrivalChance, Integer[] lengths, Integer[] frecuency, SubwayMap.Lines line) throws Exception {
 		this.names = names;
 		this.xaxis = xaxis;
 		this.yaxis = yaxis;
@@ -20,7 +21,9 @@ public class Line {
 		stations = new ArrayList<Station>();
 		this.line = line;
 		this.frequency = frecuency;
-
+		
+		if(names.length != personArrivalChance.length)
+			throw new Exception("names:" + names.length + " chances:" + personArrivalChance.length + " line:" + line);
 		loadStations();
 		loadTrains();
 
@@ -31,7 +34,7 @@ public class Line {
 				if (!s2.equals(s))
 					distribution.put(s2, (int) (Math.random() * 10));
 			}
-			PersonArrivalSimulator a = new PersonArrivalSimulator(10L, s, distribution);
+			PersonArrivalSimulator a = new PersonArrivalSimulator(personArrivalChance, s, distribution);
 			a.start(0L);
 		}
 	}
@@ -60,7 +63,7 @@ public class Line {
 		SubwaySpace previousSpace = bp;
 		
 		for (int i = 0; i < names.length; i++) {
-			currentStation = new Station(previousSpace, null, this, 20, names[i], xaxis[i], yaxis[i]);
+			currentStation = new Station(previousSpace, null, this, 40, names[i], xaxis[i], yaxis[i]);
 			if (previousSpace != null)
 				previousSpace.setNextToEnd(currentStation);
 			stations.add(currentStation);

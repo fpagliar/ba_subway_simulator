@@ -24,7 +24,7 @@ public class Train implements SimulatorObject {
 		this.name = name;
 		this.line = line;
 		passengers = new HashMap<Station, List<Person>>();
-		size = 100;
+		size = 900;
 		this.direction = direction;
 		this.line = line;
 		this.start = start;
