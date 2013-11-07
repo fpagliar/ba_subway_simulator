@@ -9,10 +9,12 @@ public class SimulatorScheduler {
 	// The smallest time unit represented is 1s
 	private long actual_timestamp;
 	private static SimulatorScheduler instance = new SimulatorScheduler();
+	private long operations;
 
 	private SimulatorScheduler() {
 		jobs = new HashMap<Long, List<SchedulerRegistrator>>(1000);
 		actual_timestamp = 0;
+		operations = 0;
 	}
 
 	public static SimulatorScheduler getInstance() {
@@ -24,6 +26,7 @@ public class SimulatorScheduler {
 	}
 	
 	public void registerEvent(Long timestamp, SchedulerRegistrator listener) throws Exception {
+		operations++;
 		if(timestamp == actual_timestamp)
 			throw new Exception("Impossible to register event in the same moment! time:" + timestamp + " listener:" + listener);
 
@@ -45,14 +48,24 @@ public class SimulatorScheduler {
 	}
 
 	public void advanceTime() throws Exception {
-		SubwayMap.getInstance().setTime(actual_timestamp + 5 * 3600);
-		SubwayMap.getInstance().render();
+		if(actual_timestamp % 2 == 0){
+			SubwayMap.getInstance().setTime(actual_timestamp + 5 * 3600);
+			SubwayMap.getInstance().render();			
+		}
 		if(jobs.isEmpty())
 			return;
 		
 		while ( !jobs.containsKey(actual_timestamp)){
 			actual_timestamp++;
 		}
+		
+		if(actual_timestamp > 61200){
+			System.out.println("TIME - " + (5 + actual_timestamp/3600) + ":" + (actual_timestamp%3600)/60 + ":" + ((actual_timestamp%3600)%60));
+			System.out.println("SIMULATION ENDED");
+			System.out.println("Operations:" + operations);
+			System.exit(0);
+		}
+			
 		
 		for (SchedulerRegistrator obj : jobs.get(actual_timestamp)){
 			obj.getObject().event(actual_timestamp);

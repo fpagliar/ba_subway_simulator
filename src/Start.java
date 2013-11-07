@@ -96,6 +96,8 @@ public class Start {
 				new Line(namesE, xaxisE, yaxisE, lengthsE, frequencyE, SubwayMap.Lines.E),
 				new Line(namesH, xaxisH, yaxisH, lengthsH, frequencyH, SubwayMap.Lines.H) };
 
+		SubwayMap.getInstance().buildBasicGraphics();
+		
 		for (int i = 0; i < 1000000; i++) {
 //			 System.out.println("tick");
 			// TimeUnit.MILLISECONDS.sleep(10);
