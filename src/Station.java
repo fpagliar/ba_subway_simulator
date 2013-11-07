@@ -93,10 +93,10 @@ public class Station extends SubwaySpace {
 				passangersToEnd.poll();
 			}
 			SubwayMap.getInstance().addPassengersNotLoaded(this.line.getLineLetter(), passangersToEnd.size());
-			// Setted before calling trainArrival because if not it would
+			// Set before calling trainArrival because if not it would
 			// resolve in a bounce-back
 			// stack overflow due to calling in event -> trainArrival
-			// -> event (in order for trains to leave before entering newones)
+			// -> event (in order for trains to leave before entering new ones)
 			timeToLeaveToEnd = null;
 			getNextToEnd().trainArrival(trainToEnd, timestamp);
 			trainToEnd = null;

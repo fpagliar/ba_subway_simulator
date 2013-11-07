@@ -31,6 +31,8 @@ public class SubwayMap {
 	private List<Station> stations;
 	private Font font;
 	private TrueTypeFont ttf;
+	private Font timer_font;
+	private TrueTypeFont timer_ttf;
 	private int passengersNotLoadedA = 0;
 	private int passengersNotLoadedB = 0;
 	private int passengersNotLoadedC = 0;
@@ -136,6 +138,8 @@ public class SubwayMap {
 		}
 		font = new Font("Arial", Font.BOLD, 10);
 		ttf = new TrueTypeFont(font, true);
+		timer_font = new Font("Arial", Font.BOLD, 15);
+		timer_ttf = new TrueTypeFont(timer_font, true);
 	}
 
 	/**
@@ -187,9 +191,8 @@ public class SubwayMap {
 					.toString(), c);
 		}
 		graphics.setColor(Color.black);
-		ttf.drawString(10, 10, time / 3600 + ":" + (time % 3600) / 60 + ":"
+		timer_ttf.drawString(20, 10, time / 3600 + ":" + (time % 3600) / 60 + ":"
 				+ ((time % 3600) % 60), Color.black);
-		// Integer.toString(passengersNotLoaded), Color.black);
 		Display.update();
 		Display.sync(100);
 		if (Display.isCloseRequested()) {

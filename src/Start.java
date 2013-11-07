@@ -8,7 +8,8 @@ import org.jfree.ui.RefineryUtilities;
 
 public class Start {
 	
-	static BarChart chart = null;
+	static BarChart barChart = null;
+	static LineChart lineChart = null;
 	
 	static String[] namesD = { "Congreso de Tucuman", "Juramento",
 			"Jose Hernandez", "Olleros", "Ministro Carranza", "Palermo",
@@ -90,6 +91,7 @@ public class Start {
 //		if(true)
 //			return;
 		SubwayMap.getInstance().start();
+		generateChartGraphs();
 
 		Line[] lines = { new Line(namesA, xaxisA, yaxisA, lengthsA, frequencyA, SubwayMap.Lines.A),
 				new Line(namesB, xaxisB, yaxisB, lengthsB, frequencyB, SubwayMap.Lines.B),
@@ -110,14 +112,28 @@ public class Start {
 	}
 	
 	private static void generateChartGraphs () {
-		if(chart != null)
-			chart.dispose();
-		chart = new BarChart("Pasajeros no transportados");
-        chart.pack();
-        RefineryUtilities.centerFrameOnScreen(chart);
-        chart.setVisible(true);
-        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-		Point location = new Point(size.width / 2 + 250, size.height / 2 - 100);
-		chart.setLocation(location);
+		if(barChart == null) {
+			barChart = new BarChart("Pasajeros no transportados");
+	        barChart.pack();
+	        RefineryUtilities.centerFrameOnScreen(barChart);
+	        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+			Point location = new Point(size.width / 2 + 250, size.height / 2 - 100);
+			barChart.setLocation(location);
+		}
+		barChart.setVisible(false);
+		barChart.refresh();
+		barChart.setVisible(true);
+		
+		if(lineChart == null) {
+			lineChart = new LineChart("Pasajeros no transportados");
+			lineChart.pack();
+	        RefineryUtilities.centerFrameOnScreen(lineChart);
+	        Dimension size2 = Toolkit.getDefaultToolkit().getScreenSize();
+			Point location2 = new Point(size2.width / 2 + 250, size2.height / 2);
+			lineChart.setLocation(location2);
+		}
+		lineChart.setVisible(false);
+		lineChart.refresh();
+		lineChart.setVisible(true);
 	}
 }
