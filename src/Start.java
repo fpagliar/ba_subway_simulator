@@ -2,8 +2,6 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
 
-import javax.swing.JFrame;
-
 import org.jfree.ui.RefineryUtilities;
 
 public class Start {
@@ -57,7 +55,7 @@ public class Start {
 			319, 319, 319, 319, 319, 319, 319, 319 };
 	static Integer[] lengthsA = { 90, 30, 60, 180, 100, 80, 50, 70, 60, 40, 40,
 			30, 25, 40, 10, 30, 0 };
-	static Integer[] frequencyA = {0, 450, 265, 175, 175, 265, 265, 265, 265, 265, 265, 295, 295, 175, 175, 420, 420, 420};
+	static Integer[] frequencyA = {450, 450, 265, 175, 175, 265, 265, 265, 265, 265, 265, 295, 295, 175, 175, 420, 420, 420};
 
 	static String[] namesE = { "Plaza de los Virreyes", "Varela",
 			"Medalla Milagrosa", "Emilio Mitre", "Jose M. Moreno",
@@ -100,6 +98,8 @@ public class Start {
 				new Line(namesE, xaxisE, yaxisE, lengthsE, frequencyE, SubwayMap.Lines.E),
 				new Line(namesH, xaxisH, yaxisH, lengthsH, frequencyH, SubwayMap.Lines.H) };
 
+		SubwayMap.getInstance().buildBasicGraphics();
+		
 		for (int i = 0; i < 1000000; i++) {
 //			 System.out.println("tick");
 			// TimeUnit.MILLISECONDS.sleep(10);

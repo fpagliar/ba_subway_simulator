@@ -34,17 +34,17 @@ public class Station extends SubwaySpace {
 	@Override
 	public void trainArrival(Train train, Long timestamp) throws Exception {
 		train.setPosition(getX(), getY());
-
+		
 		// if I have a pending event this moment, first execute it in order to
 		// free the space for the new train
-		if (timeToLeaveToEnd == timestamp || timeToLeaveToStart == timestamp) {
+		if ((timeToLeaveToEnd != null && timeToLeaveToEnd.equals(timestamp)) || (timeToLeaveToStart != null  && timeToLeaveToStart.equals(timestamp))) {
 			this.event(timestamp);
 			SimulatorScheduler.getInstance().deleteEvent(timestamp, this);
 		}
 
 		if (train.getDirection().equals(Train.Direction.TO_END)) {
 			if (trainToEnd != null)
-				throw new Exception("Trains crashed in" + getName() + "-> entered: " + train.getName() + " in station was: " + trainToEnd.getName());
+				throw new Exception("Trains crashed in " + getName() + "-> entered: " + train.getName() + " in station was: " + trainToEnd.getName() + " duration:" + getActivityDuration() + " time to leave was:" + timeToLeaveToEnd + " actual time: " + timestamp);
 			trainToEnd = train;
 			timeToLeaveToEnd = timestamp + getActivityDuration();
 			SimulatorScheduler.getInstance().registerEvent(
@@ -55,7 +55,7 @@ public class Station extends SubwaySpace {
 		}
 
 		if (trainToStart != null)
-			throw new Exception("Trains crashed in" + getName() + "-> entered: " + train.getName() + " in station was: " + trainToStart.getName());
+			throw new Exception("Trains crashed in " + getName() + "-> entered: " + train.getName() + " in station was: " + trainToStart.getName() + " time:" + timestamp + " time to leave to start:" + timeToLeaveToStart + " duration:" + getActivityDuration());
 
 		trainToStart = train;
 		timeToLeaveToStart = timestamp + getActivityDuration();
@@ -75,7 +75,6 @@ public class Station extends SubwaySpace {
 
 	@Override
 	public void event(Long timestamp) throws Exception {
-		// removeFromMap();
 		if (timeToLeaveToStart != null && timeToLeaveToStart.equals(timestamp)) {
 			trainToStart.descendPassengers(this);
 			while (passangersToStart.size() > 0 && trainToStart.passengerIn(passangersToStart.peek())) {
@@ -107,4 +106,21 @@ public class Station extends SubwaySpace {
 		return passangersToEnd.size() + passangersToStart.size();
 	}
 
+	@Override
+	public int hashCode() {
+		return line.getPos(this);
+	}
+	
+	public Line getLine(){
+		return line;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Station ){
+			Station other = (Station) obj;
+			return getName().equals(other.getName()) && line.equals(other.getLine());
+		}
+		return false;
+	}
 }

@@ -94,11 +94,30 @@ public class Line {
 		return this.line;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Line ){
+			Line other = (Line) obj;
+			return getLineLetter().equals(other.getLineLetter());
+		}
+		return false;
+	}
+	
 	public Station getStart(){
 		return stations.get(0);
 	}
 	
 	public Station getEnd(){
 		return stations.get(stations.size() - 1);
+	}
+	
+	public int getPos(Station target){
+		int i = 0;
+		for(Station s: stations){
+			i++;
+			if(s.equals(target))
+				return i;
+		}
+		return -1;
 	}
 }

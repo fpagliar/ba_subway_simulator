@@ -1,6 +1,7 @@
 import java.awt.Font;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.lwjgl.LWJGLException;
@@ -44,6 +45,7 @@ public class SubwayMap {
 	private Image arrow_up;
 	private Image arrow_down;
 	private long time = 0;
+	private HashMap<Station, Rectangle> rectangles;
 
 	public static SubwayMap getInstance() {
 		if (subwayMap == null) {
@@ -61,6 +63,7 @@ public class SubwayMap {
 		Graphics.setCurrent(graphics);
 		trains = new ArrayList<Train>();
 		stations = new ArrayList<Station>();
+		rectangles = new HashMap<Station, Rectangle>();
 	}
 
 	/**
@@ -143,7 +146,8 @@ public class SubwayMap {
 	}
 
 	/**
-	 * draw a quad with the image on it
+	 * Important!! Before the first call to render, buildBasicGraphics MUST  be called
+	 * (creates the basic shapes to be more efficient)
 	 */
 	public void render() {
 		Color.white.bind();
@@ -181,7 +185,8 @@ public class SubwayMap {
 		}
 		for (Station s : stations) {
 			graphics.setColor(Color.white);
-			graphics.fill(new Rectangle(s.getX() - 5, s.getY() - 20, 20, 15));
+			graphics.fill(rectangles.get(s));
+//			graphics.fill(new Rectangle(s.getX() - 5, s.getY() - 20, 20, 15));
 			Color c = Color.red;
 			if (s.getTotalPassengers() < 50)
 				c = Color.green.darker();
@@ -211,7 +216,15 @@ public class SubwayMap {
 	public boolean addStation(Station s) {
 		return this.stations.add(s);
 	}
+	
+	
+	public void buildBasicGraphics(){
+		for(Station s: stations)
+			rectangles.put(s, new Rectangle(s.getX() - 5, s.getY() - 20, 20, 15));
+		
+	}
 
+	
 	public void addPassengersNotLoaded(Lines line, int qtty) {
 		switch (line) {
 		case A:
