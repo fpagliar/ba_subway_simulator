@@ -25,7 +25,7 @@ public class Station extends SubwaySpace {
 			passangersToStart.add(p);
 	}
 
-	public double getPersonsWaiting(Train.Direction direction) {
+	public int getPersonsWaiting(Train.Direction direction) {
 		if (direction.equals(Train.Direction.TO_END))
 			return passangersToEnd.size();
 		return passangersToStart.size();

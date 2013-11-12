@@ -19,13 +19,13 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.ui.ApplicationFrame;
 
 @SuppressWarnings("serial")
-public class BarChart extends ApplicationFrame {
+public class HoursWaitingChart extends ApplicationFrame {
 
 	private CategoryDataset dataset;
 	private JFreeChart chart;
 	private ChartPanel chartPanel;
 
-	public BarChart(final String title) {
+	public HoursWaitingChart(final String title) {
 		super(title);
 		refresh();
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -54,17 +54,17 @@ public class BarChart extends ApplicationFrame {
 		// create the dataset...
 		final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-		dataset.addValue(SubwayMap.getInstance().getPassengersNotLoadedA(),
+		dataset.addValue(Start.lines[0].getTotalHoursWaiting(),
 				seriesA, category1);
-		dataset.addValue(SubwayMap.getInstance().getPassengersNotLoadedB(),
+		dataset.addValue(Start.lines[1].getTotalHoursWaiting(),
 				seriesB, category1);
-		dataset.addValue(SubwayMap.getInstance().getPassengersNotLoadedC(),
+		dataset.addValue(Start.lines[2].getTotalHoursWaiting(),
 				seriesC, category1);
-		dataset.addValue(SubwayMap.getInstance().getPassengersNotLoadedD(),
+		dataset.addValue(Start.lines[3].getTotalHoursWaiting(),
 				seriesD, category1);
-		dataset.addValue(SubwayMap.getInstance().getPassengersNotLoadedE(),
+		dataset.addValue(Start.lines[4].getTotalHoursWaiting(),
 				seriesE, category1);
-		dataset.addValue(SubwayMap.getInstance().getPassengersNotLoadedH(),
+		dataset.addValue(Start.lines[5].getTotalHoursWaiting(),
 				seriesH, category1);
 
 		return dataset;
@@ -76,7 +76,7 @@ public class BarChart extends ApplicationFrame {
 		// create the chart...
 		final JFreeChart chart = ChartFactory.createBarChart("", // chart title
 				"Linea", // domain axis label
-				"Pasajeros", // range axis label
+				"Horas", // range axis label
 				dataset, // data
 				PlotOrientation.VERTICAL, // orientation
 				true, // include legend

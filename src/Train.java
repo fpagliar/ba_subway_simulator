@@ -57,11 +57,12 @@ public class Train implements SimulatorObject {
 	public void descendPassengers(Station actual) {
 		if(!passengers.containsKey(actual))
 			return;
-		for(Person p : passengers.get(actual))
+		for(Person p : passengers.get(actual)) {
 			p.descend();
+			Person.descendPeople();
+		}
 		actual_passengers -= passengers.get(actual).size();
 		passengers.remove(actual);
-
 		return;
 	}
 

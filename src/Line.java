@@ -4,13 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 public class Line {
-	List<Station> stations;
+	private List<Station> stations;
 	private String[] names;
 	private Integer[] xaxis;
 	private Integer[] yaxis;
 	private Integer[] lengths;
 	private SubwayMap.Lines line;
 	private Integer[] frequency;
+	private long totalHoursWaiting = 0;
 
 	public Line(String[] names, Integer[] xaxis, Integer[] yaxis, Integer[] lengths, Integer[] frecuency, SubwayMap.Lines line) throws Exception {
 		this.names = names;
@@ -107,6 +108,10 @@ public class Line {
 		return stations.get(0);
 	}
 	
+	public List<Station> getStations(){
+		return this.stations;
+	}
+	
 	public Station getEnd(){
 		return stations.get(stations.size() - 1);
 	}
@@ -119,5 +124,13 @@ public class Line {
 				return i;
 		}
 		return -1;
+	}
+
+	public long getTotalHoursWaiting() {
+		return totalHoursWaiting;
+	}
+
+	public void setTotalHoursWaiting(long totalHoursWaiting) {
+		this.totalHoursWaiting = totalHoursWaiting;
 	}
 }

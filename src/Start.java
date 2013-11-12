@@ -8,6 +8,7 @@ public class Start {
 	
 	static BarChart barChart = null;
 	static LineChart lineChart = null;
+	static HoursWaitingChart hoursWaitingChart = null;
 	
 	static String[] namesD = { "Congreso de Tucuman", "Juramento",
 			"Jose Hernandez", "Olleros", "Ministro Carranza", "Palermo",
@@ -76,7 +77,8 @@ public class Start {
 	static Integer[] yaxisH = { 658, 640, 629, 584, 480, 403, 303, 227 };
 	static Integer[] lengthsH = { 30, 40, 50, 120, 100, 80, 30, 0 };
 	static Integer[] frequencyH = {270, 270, 215, 215, 215, 265, 265, 265, 265, 265, 265, 215, 215, 215, 215, 270, 270, 270};
-
+	
+	static Line[] lines;
 	/**
 	 * @param args
 	 * @throws Exception
@@ -89,25 +91,30 @@ public class Start {
 //		if(true)
 //			return;
 		SubwayMap.getInstance().start();
-		generateChartGraphs();
-
-		Line[] lines = { new Line(namesA, xaxisA, yaxisA, lengthsA, frequencyA, SubwayMap.Lines.A),
+		
+		lines = new Line[] { new Line(namesA, xaxisA, yaxisA, lengthsA, frequencyA, SubwayMap.Lines.A),
 				new Line(namesB, xaxisB, yaxisB, lengthsB, frequencyB, SubwayMap.Lines.B),
 				new Line(namesC, xaxisC, yaxisC, lengthsC, frequencyC, SubwayMap.Lines.C),
 				new Line(namesD, xaxisD, yaxisD, lengthsD, frequencyD, SubwayMap.Lines.D),
 				new Line(namesE, xaxisE, yaxisE, lengthsE, frequencyE, SubwayMap.Lines.E),
 				new Line(namesH, xaxisH, yaxisH, lengthsH, frequencyH, SubwayMap.Lines.H) };
 
+		generateChartGraphs();
 		SubwayMap.getInstance().buildBasicGraphics();
 		
 		for (int i = 0; i < 1000000; i++) {
 //			 System.out.println("tick");
 			// TimeUnit.MILLISECONDS.sleep(10);
-			if (i % 500 == 1 && i < 5000) {
+			if (i % 500 == 1) {
 				generateChartGraphs();
+//				lineChart.save("lineChart" + i + ".jpg");
+//				barChart.save("barChart " + i + ".jpg");
 			}
 			SimulatorScheduler.getInstance().advanceTime();
 		}
+		
+//		lineChart.save("lineChart.jpg");
+//		barChart.save("barChart.jpg");
 		
 	}
 	
@@ -125,7 +132,7 @@ public class Start {
 		barChart.setVisible(true);
 		
 		if(lineChart == null) {
-			lineChart = new LineChart("Pasajeros no transportados");
+			lineChart = new LineChart("Pasajeros en el sistema");
 			lineChart.pack();
 	        RefineryUtilities.centerFrameOnScreen(lineChart);
 	        Dimension size2 = Toolkit.getDefaultToolkit().getScreenSize();
@@ -135,5 +142,17 @@ public class Start {
 		lineChart.setVisible(false);
 		lineChart.refresh();
 		lineChart.setVisible(true);
+		
+		if(hoursWaitingChart == null) {
+			hoursWaitingChart = new HoursWaitingChart("Horas hombre esperadas");
+			hoursWaitingChart.pack();
+	        RefineryUtilities.centerFrameOnScreen(hoursWaitingChart);
+	        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+			Point location = new Point(size.width / 2 + 250, size.height / 2 + 100);
+			hoursWaitingChart.setLocation(location);
+		}
+		hoursWaitingChart.setVisible(false);
+		hoursWaitingChart.refresh();
+		hoursWaitingChart.setVisible(true);
 	}
 }

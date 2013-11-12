@@ -7,7 +7,8 @@ public class Person {
 	private Station destiny;
 	private Station origin;
 	private Date start;
-	private static long people = 0;
+	private static long totalPeople = 0;
+	private static long actualPeople = 0;
 	
 	public Person(Station destiny){
 		this.destiny = destiny;
@@ -27,9 +28,21 @@ public class Person {
 	}
 	
 	private static void incPeople(){
-		people++;
-		if(people %10000 == 0)
-			System.out.println("people ->" + people);
+		totalPeople++;
+		actualPeople++;
+		if(totalPeople %10000 == 0)
+			System.out.println("people ->" + totalPeople);
 	}
 	
+	public static long getPeople() {
+		return totalPeople;
+	}
+	
+	public static long getActualPeople() {
+		return actualPeople;
+	}
+	
+	public static void descendPeople() {
+		actualPeople--;
+	}
 }
