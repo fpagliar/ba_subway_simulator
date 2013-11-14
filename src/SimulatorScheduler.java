@@ -52,6 +52,14 @@ public class SimulatorScheduler {
 			SubwayMap.getInstance().setTime(actual_timestamp + 5 * 3600);
 			SubwayMap.getInstance().render();			
 		}
+		
+		for(Line l : Start.lines) {
+			for(Station s : l.getStations()) {
+				l.setTotalHoursWaiting(l.getTotalHoursWaiting() + s.getPersonsWaiting(Train.Direction.TO_END));
+				l.setTotalHoursWaiting(l.getTotalHoursWaiting() + s.getPersonsWaiting(Train.Direction.TO_START));
+			}
+		}
+		
 		if(jobs.isEmpty())
 			return;
 		

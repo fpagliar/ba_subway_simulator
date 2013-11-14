@@ -1,11 +1,14 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
@@ -19,8 +22,8 @@ import org.jfree.ui.ApplicationFrame;
 @SuppressWarnings("serial")
 public class LineChart extends ApplicationFrame {
 
-	private List<Point> notLoaded = null;
-	private int qtty = 0;
+	private List<Point> totalPoints = null;
+	private List<Point> actualPoints = null;
 
 	private XYDataset dataset;
 	private JFreeChart chart;
@@ -28,20 +31,17 @@ public class LineChart extends ApplicationFrame {
 
 	public LineChart(final String title) {
 		super(title);
-		notLoaded = new ArrayList<Point>();
+		totalPoints = new ArrayList<Point>();
+		actualPoints = new ArrayList<Point>();
 		refresh();
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
 	public void refresh() {
-//		this.repaint();
-		SubwayMap s = SubwayMap.getInstance();
-		int sum = s.getPassengersNotLoadedA() + s.getPassengersNotLoadedB()
-				+ s.getPassengersNotLoadedC() + s.getPassengersNotLoadedD()
-				+ s.getPassengersNotLoadedE() + s.getPassengersNotLoadedH();
-		qtty = Math.abs(sum - qtty);
-		notLoaded.add(new Point((int) SimulatorScheduler.getInstance()
-				.getTime(), qtty));
+		totalPoints.add(new Point((int) SimulatorScheduler.getInstance()
+				.getTime(), (int)Person.getPeople()));
+		actualPoints.add(new Point((int) SimulatorScheduler.getInstance()
+				.getTime(), (int)Person.getActualPeople()));
 		dataset = createDataset();
 		chart = createChart(dataset);
 		chartPanel = new ChartPanel(chart);
@@ -51,10 +51,14 @@ public class LineChart extends ApplicationFrame {
 
 	private XYDataset createDataset() {
 		XYSeriesCollection dataset = new XYSeriesCollection();
-		XYSeries data = new XYSeries("data");
-		for (Point p : notLoaded)
-			data.add(p.x, p.y);
-		dataset.addSeries(data);
+		XYSeries total = new XYSeries("Total");
+		XYSeries actual = new XYSeries("Actual");
+		for (Point p : totalPoints)
+			total.add(p.x, p.y);
+		for (Point p : actualPoints)
+			actual.add(p.x, p.y);
+		dataset.addSeries(total);
+		dataset.addSeries(actual);
 		return dataset;
 	}
 
@@ -62,11 +66,11 @@ public class LineChart extends ApplicationFrame {
 
 		// create the chart...
 		final JFreeChart chart = ChartFactory.createXYLineChart(
-				"Pasajeros no transportados", // chart title
+				"Pasajeros en el sistema", // chart title
 				"Tiempo", // x axis label
 				"Pasajeros", // y axis label
 				dataset, // data
-				PlotOrientation.VERTICAL, false, // include legend
+				PlotOrientation.VERTICAL, true, // include legend
 				true, // tooltips
 				false // urls
 				);
@@ -84,8 +88,19 @@ public class LineChart extends ApplicationFrame {
 		final XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
 		renderer.setSeriesLinesVisible(0, true);
 		renderer.setSeriesShapesVisible(0, false);
+		renderer.setSeriesLinesVisible(1, true);
+		renderer.setSeriesShapesVisible(1, false);
 		plot.setRenderer(renderer);
 
 		return chart;
+	}
+	
+	
+	public void save(String name) {
+		try {
+			ChartUtilities.saveChartAsJPEG(new File(name), chart, 500, 300);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
