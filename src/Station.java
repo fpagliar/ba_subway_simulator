@@ -102,8 +102,16 @@ public class Station extends SubwaySpace {
 		}
 	}
 
-	public Integer getTotalPassengers() {
-		return passangersToEnd.size() + passangersToStart.size();
+//	public Integer getTotalPassengers() {
+//		return passangersToEnd.size() + passangersToStart.size();
+//	}
+	
+	public Integer getPassangersToEnd(){
+		return passangersToEnd.size();
+	}
+
+	public Integer getPassangersToStart(){
+		return passangersToStart.size();
 	}
 
 	@Override

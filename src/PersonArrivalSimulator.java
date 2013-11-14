@@ -10,6 +10,11 @@ public class PersonArrivalSimulator implements SimulatorObject {
 	public PersonArrivalSimulator(Integer[] seed, Station station, Map<Station, Integer> distribution){
 //		if(seed <= 1)
 //			throw new RuntimeException("Seed has to be greater than 1");
+//		System.out.println(station.getName());
+//		if(station.getName().equals("Congreso de Tucuman")){
+//			for(Integer aseed: seed)
+//				System.out.println(aseed);
+//		}
 		this.lambda = seed;
 		this.station = station;
 		this.distribution = distribution;
@@ -41,7 +46,10 @@ public class PersonArrivalSimulator implements SimulatorObject {
 	
 	@Override
 	public void event(Long timestamp) throws Exception {
-		double time = 1 + Math.log(1 - Math.random()) / - getLambda(timestamp);
+		double time = 1 + Math.log(1 - Math.random())*100 / - getLambda(timestamp);
+//		if(time > 3){
+//			System.out.println(time + " lambda:" + getLambda(timestamp));
+//		}
 		SimulatorScheduler.getInstance().registerEvent(timestamp + (long) time, new SchedulerRegistrator(this, "person arriving to -> " + station.getName()));
 		station.personArrival(new Person(getRandomDestiny()));
 	}

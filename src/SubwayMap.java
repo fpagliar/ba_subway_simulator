@@ -45,7 +45,8 @@ public class SubwayMap {
 	private Image arrow_up;
 	private Image arrow_down;
 	private long time = 0;
-	private HashMap<Station, Rectangle> rectangles;
+	private HashMap<Station, Rectangle> rectangles_top;
+	private HashMap<Station, Rectangle> rectangles_bot;
 
 	public static SubwayMap getInstance() {
 		if (subwayMap == null) {
@@ -63,7 +64,8 @@ public class SubwayMap {
 		Graphics.setCurrent(graphics);
 		trains = new ArrayList<Train>();
 		stations = new ArrayList<Station>();
-		rectangles = new HashMap<Station, Rectangle>();
+		rectangles_top = new HashMap<Station, Rectangle>();
+		rectangles_bot = new HashMap<Station, Rectangle>();
 	}
 
 	/**
@@ -185,14 +187,24 @@ public class SubwayMap {
 		}
 		for (Station s : stations) {
 			graphics.setColor(Color.white);
-			graphics.fill(rectangles.get(s));
+			graphics.fill(rectangles_top.get(s));
+			graphics.fill(rectangles_bot.get(s));
 //			graphics.fill(new Rectangle(s.getX() - 5, s.getY() - 20, 20, 15));
+			// TO START
 			Color c = Color.red;
-			if (s.getTotalPassengers() < 50)
+			if (s.getPassangersToStart() < 50)
 				c = Color.green.darker();
-			else if (s.getTotalPassengers() < 100)
+			else if (s.getPassangersToStart() < 100)
 				c = Color.yellow.darker((float) 0.2);
-			ttf.drawString(s.getX() - 5, s.getY() - 20, s.getTotalPassengers()
+			ttf.drawString(s.getX() - 5, s.getY() - 20, s.getPassangersToStart()
+					.toString(), c);
+			// TO END
+			c = Color.red;
+			if (s.getPassangersToEnd() < 50)
+				c = Color.green.darker();
+			else if (s.getPassangersToEnd() < 100)
+				c = Color.yellow.darker((float) 0.2);
+			ttf.drawString(s.getX() - 5, s.getY() + 20, s.getPassangersToEnd()
 					.toString(), c);
 		}
 		graphics.setColor(Color.black);
@@ -220,7 +232,9 @@ public class SubwayMap {
 	
 	public void buildBasicGraphics(){
 		for(Station s: stations)
-			rectangles.put(s, new Rectangle(s.getX() - 5, s.getY() - 20, 20, 15));
+			rectangles_top.put(s, new Rectangle(s.getX() - 5, s.getY() - 20, 20, 15));
+		for(Station s: stations)
+			rectangles_bot.put(s, new Rectangle(s.getX() - 5, s.getY() + 20, 20, 15));
 		
 	}
 
