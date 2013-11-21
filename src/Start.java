@@ -21,24 +21,25 @@ public class Start {
 			185, 185, 215, 257, 298 };
 	// 100 ronda en los 3s, 1 en los 300s
 	// Cuanto mas grande el numero, mas rapido llegan a la estacion!
-	static Integer[][] personArrivalChanceD = {
-	//    5      6     7     8     9    10    11    12    13    14    15    16    17    18    19    20    21    22
-		{100 , 200 , 500 , 1000, 1000, 500 , 300 , 200 , 100 , 50  , 50  , 50  , 30  , 30  , 30  , 20  , 10  , 10  }, // Congreso
-		{80  , 180 , 350 , 80  , 80  , 300 , 150 , 200 , 100 , 50  , 50  , 50  , 30  , 30  , 30  , 20  , 10  , 10  }, // Juramento
-		{70  , 170 , 300 , 80  , 80  , 300 , 150 , 200 , 100 , 50  , 50  , 50  , 30  , 30  , 30  , 20  , 10  , 10  }, // Jose Hernandez
-		{80  , 180 , 350 , 80  , 80  , 300 , 150 , 200 , 100 , 50  , 50  , 50  , 30  , 30  , 30  , 20  , 10  , 10  }, // Olleros
-		{50  , 50  , 30  , 20  , 20  , 30  , 50  , 60  , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 1000, 1000}, // Carranza
-		{50  , 50  , 30  , 20  , 20  , 30  , 50  , 60  , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 1000, 1000}, // Palermo
-		{50  , 50  , 30  , 20  , 20  , 30  , 50  , 60  , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 1000, 1000}, // Pza Italia
-		{50  , 50  , 30  , 20  , 20  , 30  , 50  , 60  , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 1000, 1000}, // Scalabrini Ortiz
-		{50  , 50  , 30  , 20  , 20  , 30  , 50  , 60  , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 1000, 1000}, // Bulnes
-		{50  , 50  , 30  , 20  , 20  , 30  , 50  , 60  , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 1000, 1000}, // Aguero
-		{50  , 50  , 30  , 20  , 20  , 30  , 50  , 60  , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 1000, 1000}, // Pueyrredon
-		{50  , 50  , 30  , 20  , 20  , 30  , 50  , 60  , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 1000, 1000}, // Fac Medicina
-		{50  , 50  , 30  , 20  , 20  , 30  , 50  , 60  , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 1000, 1000}, // Callao
-		{50  , 50  , 30  , 20  , 20  , 30  , 50  , 60  , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 1000, 1000}, // Tribunales
-		{50  , 50  , 30  , 20  , 20  , 30  , 50  , 60  , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 1000, 1000}, // 9 de Julio
-		{50  , 1000, 1000, 1000, 1000, 1000, 1000, 800 , 1000, 1000, 100 , 100 , 100 , 1000, 1000, 1000, 1000, 1000}};// Catedral
+//	static HashMap<Station, >
+//	static Integer[][] personArrivalChanceD = {
+//	//    5      6     7     8     9    10    11    12    13    14    15    16    17    18    19    20    21    22
+//		{100 , 200 , 500 , 1000, 1000, 500 , 300 , 200 , 100 , 50  , 50  , 50  , 30  , 30  , 30  , 20  , 10  , 10  }, // Congreso
+//		{80  , 180 , 350 , 80  , 80  , 300 , 150 , 200 , 100 , 50  , 50  , 50  , 30  , 30  , 30  , 20  , 10  , 10  }, // Juramento
+//		{70  , 170 , 300 , 80  , 80  , 300 , 150 , 200 , 100 , 50  , 50  , 50  , 30  , 30  , 30  , 20  , 10  , 10  }, // Jose Hernandez
+//		{80  , 180 , 350 , 80  , 80  , 300 , 150 , 200 , 100 , 50  , 50  , 50  , 30  , 30  , 30  , 20  , 10  , 10  }, // Olleros
+//		{50  , 50  , 30  , 20  , 20  , 30  , 50  , 60  , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 1000, 1000}, // Carranza
+//		{50  , 50  , 30  , 20  , 20  , 30  , 50  , 60  , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 1000, 1000}, // Palermo
+//		{50  , 50  , 30  , 20  , 20  , 30  , 50  , 60  , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 1000, 1000}, // Pza Italia
+//		{50  , 50  , 30  , 20  , 20  , 30  , 50  , 60  , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 1000, 1000}, // Scalabrini Ortiz
+//		{50  , 50  , 30  , 20  , 20  , 30  , 50  , 60  , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 1000, 1000}, // Bulnes
+//		{50  , 50  , 30  , 20  , 20  , 30  , 50  , 60  , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 1000, 1000}, // Aguero
+//		{50  , 50  , 30  , 20  , 20  , 30  , 50  , 60  , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 1000, 1000}, // Pueyrredon
+//		{50  , 50  , 30  , 20  , 20  , 30  , 50  , 60  , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 1000, 1000}, // Fac Medicina
+//		{50  , 50  , 30  , 20  , 20  , 30  , 50  , 60  , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 1000, 1000}, // Callao
+//		{50  , 50  , 30  , 20  , 20  , 30  , 50  , 60  , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 1000, 1000}, // Tribunales
+//		{50  , 50  , 30  , 20  , 20  , 30  , 50  , 60  , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 100 , 1000, 1000}, // 9 de Julio
+//		{50  , 1000, 1000, 1000, 1000, 1000, 1000, 800 , 1000, 1000, 100 , 100 , 100 , 1000, 1000, 1000, 1000, 1000}};// Catedral
 	static Integer[][] destiniesD = {};
 	static Integer[] lengthsD = { 100, 65, 80, 95, 110, 80, 80, 65, 65, 70, 115,
 			65, 90, 65, 60, 0 };
@@ -179,13 +180,13 @@ public class Start {
 	public static void main(String[] args) throws Exception {
 
 		SubwayMap.getInstance().start();
-
-		lines = new Line[] { new Line(namesA, xaxisA, yaxisA, personArrivalChanceA, lengthsA, frequencyA, SubwayMap.Lines.A),
-				new Line(namesB, xaxisB, yaxisB, personArrivalChanceB, lengthsB, frequencyB, SubwayMap.Lines.B),
-				new Line(namesC, xaxisC, yaxisC, personArrivalChanceC, lengthsC, frequencyC, SubwayMap.Lines.C),
-				new Line(namesD, xaxisD, yaxisD, personArrivalChanceD, lengthsD, frequencyD, SubwayMap.Lines.D),
-				new Line(namesE, xaxisE, yaxisE, personArrivalChanceE, lengthsE, frequencyE, SubwayMap.Lines.E),
-				new Line(namesH, xaxisH, yaxisH, personArrivalChanceH, lengthsH, frequencyH, SubwayMap.Lines.H) };
+		new LineACreator().create();
+//		lines = new Line[] { new Line(namesA, xaxisA, yaxisA, personArrivalChanceA, lengthsA, frequencyA, SubwayMap.Lines.A),
+//				new Line(namesB, xaxisB, yaxisB, personArrivalChanceB, lengthsB, frequencyB, SubwayMap.Lines.B),
+//				new Line(namesC, xaxisC, yaxisC, personArrivalChanceC, lengthsC, frequencyC, SubwayMap.Lines.C),
+//				new Line(namesD, xaxisD, yaxisD, personArrivalChanceD, lengthsD, frequencyD, SubwayMap.Lines.D),
+//				new Line(namesE, xaxisE, yaxisE, personArrivalChanceE, lengthsE, frequencyE, SubwayMap.Lines.E),
+//				new Line(namesH, xaxisH, yaxisH, personArrivalChanceH, lengthsH, frequencyH, SubwayMap.Lines.H) };
 
 		generateChartGraphs();
 		SubwayMap.getInstance().buildBasicGraphics();
@@ -193,6 +194,8 @@ public class Start {
 		for (int i = 0; i < 1000000; i++) {
 			if (i % 500 == 1) {
 				generateChartGraphs();
+//				lineChart.save("lineChart" + i + ".jpg");
+//				barChart.save("barChart " + i + ".jpg");
 			}
 			SimulatorScheduler.getInstance().advanceTime();
 		}

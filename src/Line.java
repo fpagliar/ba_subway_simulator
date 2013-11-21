@@ -12,8 +12,11 @@ public class Line {
 	private SubwayMap.Lines line;
 	private Integer[] frequency;
 	private long totalHoursWaiting = 0;
-
-	public Line(String[] names, Integer[] xaxis, Integer[] yaxis, Integer[][] personArrivalChance, Integer[] lengths, Integer[] frecuency, SubwayMap.Lines line) throws Exception {
+	public static HashMap<SubwayMap.Lines, Line> lines = new HashMap<SubwayMap.Lines, Line>();
+	public static HashMap<String, Station> allStations = new HashMap<String, Station>();
+	
+	public Line(String[] names, Integer[] xaxis, Integer[] yaxis, Integer[] lengths, Integer[] frecuency, SubwayMap.Lines line) throws Exception {
+		lines.put(line, this);
 		this.names = names;
 		this.xaxis = xaxis;
 		this.yaxis = yaxis;
@@ -22,22 +25,19 @@ public class Line {
 		this.line = line;
 		this.frequency = frecuency;
 		
-		if(names.length != personArrivalChance.length)
-			throw new Exception("names:" + names.length + " chances:" + personArrivalChance.length + " line:" + line);
 		loadStations();
 		loadTrains();
 
-		int i = 0;
-		Map<Station, Integer> distribution;
-		for (Station s : stations) {
-			distribution = new HashMap<Station, Integer>();
-			for (Station s2 : stations) {
-				if (!s2.equals(s))
-					distribution.put(s2, (int) (Math.random() * 10));
-			}
-			PersonArrivalSimulator a = new PersonArrivalSimulator(personArrivalChance[i++], s, distribution);
-			a.start(0L);
-		}
+//		Map<Station, Integer> distribution;
+//		for (Station s : stations) {
+//			distribution = new HashMap<Station, Integer>();
+//			for (Station s2 : stations) {
+//				if (!s2.equals(s))
+//					distribution.put(s2, (int) (Math.random() * 10));
+//			}
+//			PersonArrivalSimulator a = new PersonArrivalSimulator(personArrivalChance[i++], s, distribution);
+//			a.start(0L);
+//		}
 	}
 
 	public Train.Direction getDirection(Station from, Station to) throws Exception {
@@ -65,6 +65,7 @@ public class Line {
 		
 		for (int i = 0; i < names.length; i++) {
 			currentStation = new Station(previousSpace, null, this, 40, names[i], xaxis[i], yaxis[i]);
+			allStations.put(currentStation.getName(), currentStation);
 			if (previousSpace != null)
 				previousSpace.setNextToEnd(currentStation);
 			stations.add(currentStation);
@@ -89,9 +90,6 @@ public class Line {
 			for(int j = getAppropiateStartJ(lastTrain, i, frequency); j < 3600; j+= frequency[i]){
 				// although may seem obvious, it is important to keep in mind. When loading trains on START-STATION
 				// the direction should be TO_END!!
-				if(getLineLetter().equals(SubwayMap.Lines.D)){
-					System.out.println("registering trains for:" + (long)j + i * 3600 + " - " + (5+i) + ":" + j/60 + ":" + j%60);
-				}
 				SimulatorScheduler.getInstance().registerEvent((long)j + i * 3600, new SchedulerRegistrator( new Train(getLineLetter() + ": start - " + i + ":" + j/60 + ":" + j%60, this, getStart(), Train.Direction.TO_END), "Train is going to start its trip"));
 				SimulatorScheduler.getInstance().registerEvent((long)j + i * 3600, new SchedulerRegistrator( new Train(getLineLetter() + ": end - " + i + ":" + j/60 + ":" + j%60, this, getEnd(), Train.Direction.TO_START), "Train is going to start its trip"));
 				lastTrain = j + i * 3600;
