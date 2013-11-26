@@ -10,7 +10,8 @@ public class Person {
 	private static long totalPeople = 0;
 	private static long actualPeople = 0;
 	
-	public Person(Station destiny){
+	public Person(Station origin, Station destiny){
+		this.origin = origin;
 		this.destiny = destiny;
 		incPeople();
 	}
@@ -27,6 +28,11 @@ public class Person {
 		return (this.destiny != null) && (this.destiny.equals(destiny));
 	}
 	
+	public Station getOrigin(){
+		return origin;
+	}
+	
+
 	private static void incPeople(){
 		totalPeople++;
 		actualPeople++;

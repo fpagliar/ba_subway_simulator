@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Line {
 	private List<Station> stations;
@@ -14,8 +13,11 @@ public class Line {
 	private long totalHoursWaiting = 0;
 	public static HashMap<SubwayMap.Lines, Line> lines = new HashMap<SubwayMap.Lines, Line>();
 	public static HashMap<String, Station> allStations = new HashMap<String, Station>();
+	public HashMap<SubwayMap.Lines, Integer> lineChangePopularity;
+	public static HashMap<Station, List<Station>> combinations = new HashMap<Station, List<Station>>();
+	public Integer[][] stationPopularity;
 	
-	public Line(String[] names, Integer[] xaxis, Integer[] yaxis, Integer[] lengths, Integer[] frecuency, SubwayMap.Lines line) throws Exception {
+	public Line(String[] names, Integer[] xaxis, Integer[] yaxis, Integer[] lengths, Integer[] frecuency, SubwayMap.Lines line, Integer[][] stationPopularity) throws Exception {
 		lines.put(line, this);
 		this.names = names;
 		this.xaxis = xaxis;
@@ -24,7 +26,9 @@ public class Line {
 		stations = new ArrayList<Station>();
 		this.line = line;
 		this.frequency = frecuency;
-		
+		lineChangePopularity = new HashMap<SubwayMap.Lines, Integer>();
+		this.stationPopularity = stationPopularity;
+
 		loadStations();
 		loadTrains();
 
@@ -43,10 +47,20 @@ public class Line {
 	public Train.Direction getDirection(Station from, Station to) throws Exception {
 		boolean passed_from = false;
 		boolean exists = false;
+//		if(Station start: combinations.keySet())
+		Station partialDestiny = getPartialDestiny(from, to);
+//		if(to.getLine().getLineLetter() != from.getLine().getLineLetter()){
+//			for(Station key : combinations.keySet())
+//				if(key.getLine().equals(from.getLine()))
+//					for(Station s : combinations.get(key))
+//						if(s.getLine().equals(to.getLine()))
+//							partialDestiny = key;
+//		}
+			
 		for (Station s : stations) {
 			if (s.equals(from))
 				passed_from = true;
-			if (s.equals(to)) {
+			if (s.equals(partialDestiny)) {
 				exists = true;
 				if (passed_from)
 					return Train.Direction.TO_END;
@@ -57,6 +71,18 @@ public class Line {
 		throw new Exception("NO DIRECTIONS FROM " + from + " TO:" + to);
 	}
 
+	public Station getPartialDestiny(Station from, Station to){
+		Station partialDestiny = to;
+		if(to.getLine().getLineLetter() != from.getLine().getLineLetter()){
+			for(Station key : combinations.keySet())
+				if(key.getLine().equals(from.getLine()))
+					for(Station s : combinations.get(key))
+						if(s.getLine().equals(to.getLine()))
+							partialDestiny = key;
+		}
+		return partialDestiny;
+	}
+	
 	private void loadStations() throws Exception {
 
 		Station currentStation = null;
@@ -64,8 +90,8 @@ public class Line {
 		SubwaySpace previousSpace = bp;
 		
 		for (int i = 0; i < names.length; i++) {
-			currentStation = new Station(previousSpace, null, this, 40, names[i], xaxis[i], yaxis[i]);
-			allStations.put(currentStation.getName(), currentStation);
+			currentStation = new Station(previousSpace, null, this, 40, names[i], xaxis[i], yaxis[i], stationPopularity[i]);
+			allStations.put(this.line + currentStation.getName(), currentStation);
 			if (previousSpace != null)
 				previousSpace.setNextToEnd(currentStation);
 			stations.add(currentStation);

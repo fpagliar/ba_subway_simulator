@@ -53,7 +53,9 @@ public class SimulatorScheduler {
 			SubwayMap.getInstance().render();			
 		}
 		
-		for(Line l : Start.lines) {
+		Line l;
+		for(SubwayMap.Lines letter : Line.lines.keySet()) {
+			l = Line.lines.get(letter);
 			for(Station s : l.getStations()) {
 				l.setTotalHoursWaiting(l.getTotalHoursWaiting() + s.getPersonsWaiting(Train.Direction.TO_END));
 				l.setTotalHoursWaiting(l.getTotalHoursWaiting() + s.getPersonsWaiting(Train.Direction.TO_START));

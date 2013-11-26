@@ -19,8 +19,10 @@ public class BouncePoint extends SubwaySpace {
 	}
 
 	public void trainArrival(Train train, Long timestamp) throws Exception {
-		if(train.hasPassengers())
+		if(train.hasPassengers()){
+			train.print();
 			throw new Exception("Passengers still in the train " + getName() + "!!");
+		}
 		SubwayMap.getInstance().removeTrain(train);
 //		System.out.println("TRAIN ARRIVING AT BOUNCE POINT: " + train.getName());
 		// trains now fall over the edge!!

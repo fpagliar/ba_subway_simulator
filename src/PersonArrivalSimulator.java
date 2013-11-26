@@ -1,13 +1,13 @@
-import java.util.Map;
+
 
 public class PersonArrivalSimulator implements SimulatorObject {
 	
 	private Integer[] lambda;
 	private Station station;
 	// Map of the style: destiny -> tickets
-	private Map<Station, Integer> distribution;
+//	private Map<Station, Integer> destinies;
 	
-	public PersonArrivalSimulator(Integer[] seed, Station station, Map<Station, Integer> distribution){
+	public PersonArrivalSimulator(Integer[] seed, Station station){
 //		if(seed <= 1)
 //			throw new RuntimeException("Seed has to be greater than 1");
 //		System.out.println(station.getName());
@@ -17,29 +17,45 @@ public class PersonArrivalSimulator implements SimulatorObject {
 //		}
 		this.lambda = seed;
 		this.station = station;
-		this.distribution = distribution;
+//		this.destinies = distribution;
 	}
 	
-	private Long getTotalTickets(){
-		Long ans = 0L;
-		for(Integer d: distribution.values())
-			ans += d;
-		return ans;
-	}
+//	private Long getTotalTickets(){
+//		Long ans = 0L;
+////		for(Integer d: destinies.values())
+////			ans += d;
+//		return ans;
+//	}
 	
-	private Station getRandomDestiny() throws Exception{
-		double ticketNumber = Math.random() * getTotalTickets();
-		for(Station key : distribution.keySet()){
-			if(0 < ticketNumber && ticketNumber < distribution.get(key)){
-				return key;
-			}else {
-				ticketNumber -= distribution.get(key);
-			}
+	private Station getRandomDestiny(long timestamp) throws Exception{
+		double lineDecider = Math.random() * 100;
+		int ans = 0;
+		for(SubwayMap.Lines line: station.getLine().lineChangePopularity.keySet()){
+			ans += station.getLine().lineChangePopularity.get(line);
+			if(ans > lineDecider)
+				return getRandomStation(Line.lines.get(line), timestamp);
 		}
-		throw new Exception("Random destiny failed :(");
+		return getRandomStation(station.getLine(), timestamp);
+		
+//		double ticketNumber = Math.random() * getTotalTickets();
+//		for(Station key : destinies.keySet()){
+//			if(0 < ticketNumber && ticketNumber < destinies.get(key)){
+//				return key;
+//			}else {
+//				ticketNumber -= destinies.get(key);
+//			}
+//		}
+//		System.exit(0);
+//		List<Station> destinies = station.getLine().getStations();
+//		Station ans;
+//		do
+//			ans = destinies.get((int) (Math.random() * destinies.size()));
+//		while(ans.equals(station));
+//		return ans;
+//		throw new Exception("Random destiny failed :(");
 	}
 	
-	public void start(Long timestamp) throws Exception{
+	public void start(Long timestamp) throws Exception {
 		double time = 1 + Math.log(1 - Math.random()) / - getLambda(timestamp);
 		SimulatorScheduler.getInstance().registerEvent(timestamp + (long)time, new SchedulerRegistrator(this, "person arriving to -> " + station.getName()));
 	}
@@ -47,11 +63,8 @@ public class PersonArrivalSimulator implements SimulatorObject {
 	@Override
 	public void event(Long timestamp) throws Exception {
 		double time = 1 + Math.log(1 - Math.random())*100 / - getLambda(timestamp);
-//		if(time > 3){
-//			System.out.println(time + " lambda:" + getLambda(timestamp));
-//		}
 		SimulatorScheduler.getInstance().registerEvent(timestamp + (long) time, new SchedulerRegistrator(this, "person arriving to -> " + station.getName()));
-		station.personArrival(new Person(getRandomDestiny()));
+		station.personArrival(new Person(station, getRandomDestiny((long)time)));
 	}
 	
 	@Override
@@ -61,6 +74,27 @@ public class PersonArrivalSimulator implements SimulatorObject {
 	
 	private int getLambda(long timestamp){
 		return lambda[(int) (timestamp/3600)];
+	}
+	
+	private Station getRandomStation(Line line, long timestamp) throws Exception{
+		int totalTickets = 0;
+		for(Station s: line.getStations())
+			totalTickets += s.getPopularity(timestamp);
+		int ticket = (int)(Math.random() * totalTickets);
+		int acum = 0;
+		for(Station s: line.getStations()){
+			acum += s.getPopularity(timestamp);
+			if(acum > ticket){
+				if(s.equals(this))
+					return getRandomStation(line, timestamp);
+				return s;
+			}
+		}
+		System.out.println("total:" + totalTickets);
+		System.out.println("ticket:" + ticket);
+		System.out.println("acum:" + acum);
+		throw new Exception("Can this happen?");
+//		return line.getStations().get(line.getStations().size());
 	}
 
 }

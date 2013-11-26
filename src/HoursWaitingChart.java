@@ -54,17 +54,17 @@ public class HoursWaitingChart extends ApplicationFrame {
 		// create the dataset...
 		final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-		dataset.addValue(Start.lines[0].getTotalHoursWaiting(),
+		dataset.addValue(Line.lines.get(SubwayMap.Lines.A).getTotalHoursWaiting(),
 				seriesA, category1);
-		dataset.addValue(Start.lines[1].getTotalHoursWaiting(),
+		dataset.addValue(Line.lines.get(SubwayMap.Lines.B).getTotalHoursWaiting(),
 				seriesB, category1);
-		dataset.addValue(Start.lines[2].getTotalHoursWaiting(),
+		dataset.addValue(Line.lines.get(SubwayMap.Lines.C).getTotalHoursWaiting(),
 				seriesC, category1);
-		dataset.addValue(Start.lines[3].getTotalHoursWaiting(),
+		dataset.addValue(Line.lines.get(SubwayMap.Lines.D).getTotalHoursWaiting(),
 				seriesD, category1);
-		dataset.addValue(Start.lines[4].getTotalHoursWaiting(),
+		dataset.addValue(Line.lines.get(SubwayMap.Lines.E).getTotalHoursWaiting(),
 				seriesE, category1);
-		dataset.addValue(Start.lines[5].getTotalHoursWaiting(),
+		dataset.addValue(Line.lines.get(SubwayMap.Lines.H).getTotalHoursWaiting(),
 				seriesH, category1);
 
 		return dataset;

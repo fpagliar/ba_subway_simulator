@@ -10,15 +10,23 @@ public class Station extends SubwaySpace {
 	private Train trainToEnd;
 	private Long timeToLeaveToEnd;
 	private Line line;
+	private Integer[] popularity;
 
-	public Station(SubwaySpace nextToStart, SubwaySpace nextToEnd, Line line, long waitingDuration, String name, float x, float y) {
+	public Station(SubwaySpace nextToStart, SubwaySpace nextToEnd, Line line, long waitingDuration, String name, float x, float y, Integer[] popularity) {
 		super(nextToStart, nextToEnd, waitingDuration, name, x, y);
 		this.passangersToStart = new LinkedList<Person>();
 		this.passangersToEnd = new LinkedList<Person>();
 		this.line = line;
+		this.popularity = popularity;
 	}
 
 	public void personArrival(Person p) throws Exception {
+		if(p.getDestiny().equals(this))
+			return;
+		if(line.getPartialDestiny(this, p.getDestiny()).equals(this)){
+			makeCombination(p);
+			return;
+		}
 		if (line.getDirection(this, p.getDestiny()).equals(Train.Direction.TO_END))
 			passangersToEnd.add(p);
 		else
@@ -77,7 +85,7 @@ public class Station extends SubwaySpace {
 	public void event(Long timestamp) throws Exception {
 		if (timeToLeaveToStart != null && timeToLeaveToStart.equals(timestamp)) {
 			trainToStart.descendPassengers(this);
-			while (passangersToStart.size() > 0 && trainToStart.passengerIn(passangersToStart.peek())) {
+			while (passangersToStart.size() > 0 && trainToStart.passengerIn(passangersToStart.peek(), line.getPartialDestiny(this, passangersToStart.peek().getDestiny()))) {
 				passangersToStart.poll();
 			}
 			SubwayMap.getInstance().addPassengersNotLoaded(this.line.getLineLetter(), passangersToStart.size());
@@ -88,7 +96,7 @@ public class Station extends SubwaySpace {
 
 		if (timeToLeaveToEnd != null && timeToLeaveToEnd.equals(timestamp)) {
 			trainToEnd.descendPassengers(this);
-			while (passangersToEnd.size() > 0 && trainToEnd.passengerIn(passangersToEnd.peek())) {
+			while (passangersToEnd.size() > 0 && trainToEnd.passengerIn(passangersToEnd.peek(), line.getPartialDestiny(this, passangersToEnd.peek().getDestiny()))) {
 				passangersToEnd.poll();
 			}
 			SubwayMap.getInstance().addPassengersNotLoaded(this.line.getLineLetter(), passangersToEnd.size());
@@ -121,6 +129,30 @@ public class Station extends SubwaySpace {
 	
 	public Line getLine(){
 		return line;
+	}
+	
+	public Integer getPopularity(Long timestamp) throws Exception{
+		for(int i= 0; i < popularity.length; i++){
+			if( i == (timestamp%3600) )
+				return popularity[i];
+		}
+		throw new Exception("Invalid popularity for time:" + timestamp + " in station:" + getName());
+	}
+	
+	public void makeCombination(Person p) throws Exception{
+		// If it can get to the target line, hop in
+		for(Station s : getLine().combinations.get(this))
+			if(s.getLine().equals(p.getDestiny().getLine())){
+				s.personArrival(p);
+				return;
+			}
+		// If it can't get directly to the target line, hop in a line that combines with it
+		for(Station s : getLine().combinations.get(this))
+			// To avoid getting into a line who's output to the destiny is that station
+			if( ! s.getLine().getPartialDestiny(s, p.getDestiny()).equals(s) ){
+				s.personArrival(p);
+				return;
+			}
 	}
 	
 	@Override

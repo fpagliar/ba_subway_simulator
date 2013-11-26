@@ -31,11 +31,12 @@ public class Train implements SimulatorObject {
 		this.actual_passengers = 0;
 	}
 
-	public boolean passengerIn(Person p) {
+	public boolean passengerIn(Person p, Station target) {
 		if (actual_passengers <= size) {
-			if(!passengers.containsKey(p.getDestiny()))
-				passengers.put(p.getDestiny(), new ArrayList<Person>());
-			passengers.get(p.getDestiny()).add(p);
+//			if(!passengers.containsKey(p.getDestiny()))
+			if(!passengers.containsKey(target))
+				passengers.put(target, new ArrayList<Person>());
+			passengers.get(target).add(p);
 			actual_passengers++;
 			return true;
 		}
@@ -104,5 +105,14 @@ public class Train implements SimulatorObject {
 	public void event(Long timestamp) throws Exception {
 		SubwayMap.getInstance().addTrain(this);
 		start.trainArrival(this, timestamp);
+	}
+	
+	public void print(){
+		System.out.println("train:" + getName() + " from line:" + getLine());
+		System.out.println("----------- passangers -----------");
+		for(Station s: passengers.keySet())
+			for(Person p: passengers.get(s))
+				System.out.println("origin:" + p.getOrigin() + " destiny:" + p.getDestiny() + " se baja en:" + s);
+		System.out.println("----------------------------------");
 	}
 }
