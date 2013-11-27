@@ -55,12 +55,15 @@ public class Train implements SimulatorObject {
 		return actual_passengers != 0;
 	}
 	
-	public void descendPassengers(Station actual) {
+	public void descendPassengers(Station actual) throws Exception {
 		if(!passengers.containsKey(actual))
 			return;
 		for(Person p : passengers.get(actual)) {
 			p.descend();
-			Person.descendPeople();
+			if(p.getDestiny().equals(actual))
+				Person.descendPeople();
+			else
+				actual.makeCombination(p);
 		}
 		actual_passengers -= passengers.get(actual).size();
 		passengers.remove(actual);

@@ -11,6 +11,7 @@ public class Station extends SubwaySpace {
 	private Long timeToLeaveToEnd;
 	private Line line;
 	private Integer[] popularity;
+	public Integer chosen = 0;
 
 	public Station(SubwaySpace nextToStart, SubwaySpace nextToEnd, Line line, long waitingDuration, String name, float x, float y, Integer[] popularity) {
 		super(nextToStart, nextToEnd, waitingDuration, name, x, y);
@@ -21,8 +22,10 @@ public class Station extends SubwaySpace {
 	}
 
 	public void personArrival(Person p) throws Exception {
-		if(p.getDestiny().equals(this))
+		if(p.getDestiny().equals(this)){
+			Person.descendPeople();
 			return;
+		}
 		if(line.getPartialDestiny(this, p.getDestiny()).equals(this)){
 			makeCombination(p);
 			return;
@@ -132,11 +135,21 @@ public class Station extends SubwaySpace {
 	}
 	
 	public Integer getPopularity(Long timestamp) throws Exception{
-		for(int i= 0; i < popularity.length; i++){
-			if( i == (timestamp%3600) )
-				return popularity[i];
-		}
-		throw new Exception("Invalid popularity for time:" + timestamp + " in station:" + getName());
+		return popularity[(int) (timestamp/3600)];
+//		for(int i = 0; i < popularity.length; i++){
+//			if( i == (timestamp%3600) )
+//				return popularity[i];
+//		}
+// WTF did I make here?
+//		for(int i = 0; i < popularity.length; i++){
+//			if( i == (timestamp%3600) )
+//				return popularity[i];
+//		}
+//		System.out.println("popularity ---- length:" + popularity.length);
+//		for(int i= 0; i < popularity.length; i++){
+//			System.out.println("i:" + i + " - " + popularity[i]);
+//		}
+//		throw new Exception("Invalid popularity for time:" + timestamp + " in station:" + getName());
 	}
 	
 	public void makeCombination(Person p) throws Exception{

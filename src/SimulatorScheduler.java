@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +50,7 @@ public class SimulatorScheduler {
 	}
 
 	public void advanceTime() throws Exception {
-		if(actual_timestamp % 2 == 0){
+		if(actual_timestamp % 5 == 0){
 			SubwayMap.getInstance().setTime(actual_timestamp + 5 * 3600);
 			SubwayMap.getInstance().render();			
 		}

@@ -64,7 +64,9 @@ public class PersonArrivalSimulator implements SimulatorObject {
 	public void event(Long timestamp) throws Exception {
 		double time = 1 + Math.log(1 - Math.random())*100 / - getLambda(timestamp);
 		SimulatorScheduler.getInstance().registerEvent(timestamp + (long) time, new SchedulerRegistrator(this, "person arriving to -> " + station.getName()));
-		station.personArrival(new Person(station, getRandomDestiny((long)time)));
+		Station destiny = getRandomDestiny((long)time);
+		destiny.chosen++;
+		station.personArrival(new Person(station, destiny));
 	}
 	
 	@Override
