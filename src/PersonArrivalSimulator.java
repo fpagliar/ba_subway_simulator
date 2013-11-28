@@ -28,7 +28,7 @@ public class PersonArrivalSimulator implements SimulatorObject {
 //	}
 	
 	private Station getRandomDestiny(long timestamp) throws Exception{
-		double lineDecider = Math.random() * 100;
+		double lineDecider = Start.random.nextDouble() * 100;
 		int ans = 0;
 		for(SubwayMap.Lines line: station.getLine().lineChangePopularity.keySet()){
 			ans += station.getLine().lineChangePopularity.get(line);
@@ -56,15 +56,16 @@ public class PersonArrivalSimulator implements SimulatorObject {
 	}
 	
 	public void start(Long timestamp) throws Exception {
-		double time = 1 + Math.log(1 - Math.random()) / - getLambda(timestamp);
+		double time = 1 + Math.log(1 - Start.random.nextDouble()) / - getLambda(timestamp);
 		SimulatorScheduler.getInstance().registerEvent(timestamp + (long)time, new SchedulerRegistrator(this, "person arriving to -> " + station.getName()));
 	}
 	
 	@Override
 	public void event(Long timestamp) throws Exception {
-		double time = 1 + Math.log(1 - Math.random())*100 / - getLambda(timestamp);
+		double time = 1 + Math.log(1 - Start.random.nextDouble())*100 / - getLambda(timestamp);
 		SimulatorScheduler.getInstance().registerEvent(timestamp + (long) time, new SchedulerRegistrator(this, "person arriving to -> " + station.getName()));
-		Station destiny = getRandomDestiny((long)time);
+//		Station destiny = getRandomDestiny((long)time);
+		Station destiny = getRandomDestiny(timestamp);
 		destiny.chosen++;
 		station.personArrival(new Person(station, destiny));
 	}
@@ -80,9 +81,18 @@ public class PersonArrivalSimulator implements SimulatorObject {
 	
 	private Station getRandomStation(Line line, long timestamp) throws Exception{
 		int totalTickets = 0;
+//		if(line.getLineLetter().equals(SubwayMap.Lines.A))
+//			if(timestamp >(18-5)*60*60 && timestamp < ((18-5)*60*60+1000)){
+//				System.out.println("-----------------------POPULARITIESS-----------------------");
+//				for(Station s: line.getStations())
+//					System.out.println(s + " - " + s.getPopularity(timestamp));
+//				System.out.println("------------------------------------------------------------");
+//			}else
+//				System.out.println("timestamp " + (timestamp/3600+5) + ":" + timestamp%3600/60 + ":" + timestamp%3600%60);
 		for(Station s: line.getStations())
 			totalTickets += s.getPopularity(timestamp);
-		int ticket = (int)(Math.random() * totalTickets);
+		
+		int ticket = (int)(Start.random.nextDouble() * totalTickets);
 		int acum = 0;
 		for(Station s: line.getStations()){
 			acum += s.getPopularity(timestamp);

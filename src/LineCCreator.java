@@ -34,7 +34,7 @@ public class LineCCreator {
 		c.lineChangePopularity.put(SubwayMap.Lines.D, 10);
 		c.lineChangePopularity.put(SubwayMap.Lines.B, 10);
 		c.lineChangePopularity.put(SubwayMap.Lines.A, 10);
-		c.lineChangePopularity.put(SubwayMap.Lines.E, 10);
+		c.lineChangePopularity.put(SubwayMap.Lines.E, 5);
 	}
 
 	public void setCombinations(){
@@ -56,12 +56,51 @@ public class LineCCreator {
 	}
 	
 	public void setPersonArrivalChance() throws Exception{
-		// 100 ronda en los 3s, 1 en los 300s
-		// Cuanto mas grande el numero, mas rapido llegan a la estacion!
+//		// 100 ronda en los 3s, 1 en los 300s
+//		// Cuanto mas grande el numero, mas rapido llegan a la estacion!
 		Integer[] retiro = {
 //				5      6     7     8     9    10    11    12    13    14    15    16    17    18    19    20    21    22
-				100 , 200 , 500 , 1000, 1000, 500 , 300 , 200 , 100 , 50  , 50  , 50  , 30  , 30  , 30  , 20  , 10  , 10 };
+			    40 ,  50 ,  70 ,  90,   90,   80 ,  50 ,  40 ,  30 ,  20  , 15  , 15  , 15  , 15  , 10  , 20  , 20  , 10 };
 		new PersonArrivalSimulator(retiro, Line.allStations.get(SubwayMap.Lines.C+"Retiro")).start(0L);
-		
+//		
+		Integer[] sanMartin = {
+//				5      6     7     8     9    10    11    12    13    14    15    16    17    18    19    20    21    22
+				40 ,  40 ,  40 ,  40,   40,   40 ,  40 ,  40 ,  40 ,  40  , 35  , 25  , 45  , 40  , 45  , 40  , 40  , 10 };
+		new PersonArrivalSimulator(sanMartin, Line.allStations.get(SubwayMap.Lines.C+"San Martin")).start(0L);
+//
+		Integer[] lavalle = {
+//			    5      6     7     8     9    10    11    12    13    14    15    16    17    18    19    20    21    22
+			    45 ,  35 ,  55 ,   40,   40,  45 ,  50 ,  40 ,  40 ,  40  , 50  , 35  , 25  , 15  , 10  , 20  , 20  , 10 };
+		new PersonArrivalSimulator(lavalle, Line.allStations.get(SubwayMap.Lines.C+"Lavalle")).start(0L);
+//
+		Integer[] diagonalNorte = {
+//				5      6     7     8     9    10    11    12    13    14    15    16    17    18    19    20    21    22
+				25 ,  40 ,  35 ,  50,   50,   35 ,  40 ,  40 ,  40 ,  40  , 30  , 35  , 25  , 15  , 10  , 20  , 20  , 10 };
+		new PersonArrivalSimulator(diagonalNorte, Line.allStations.get(SubwayMap.Lines.C+"Diagonal Norte")).start(0L);
+//
+		Integer[] avenidaDeMayo = {
+//				5      6     7     8     9    10    11    12    13    14    15    16    17    18    19    20    21    22
+				20 ,  35 ,  40 ,   40,   40,  25 ,  40 ,  40 ,  40 ,  40  , 30  , 35  , 25  , 45  , 40  , 20  , 20  , 10 };
+		new PersonArrivalSimulator(avenidaDeMayo, Line.allStations.get(SubwayMap.Lines.C+"Avenida de Mayo")).start(0L);
+//
+		Integer[] moreno = {
+//				5      6     7     8     9    10    11    12    13    14    15    16    17    18    19    20    21    22
+				20 ,  35 ,  45 ,   40,   40,  40 ,  40 ,  40 ,  40 ,  40  , 40  , 40  , 30  , 30  , 30  , 20  , 10  , 10 };
+		new PersonArrivalSimulator(moreno, Line.allStations.get(SubwayMap.Lines.C+"Moreno")).start(0L);
+//	
+		Integer[] independencia = {
+//				5      6     7     8     9    10    11    12    13    14    15    16    17    18    19    20    21    22
+				10 ,  25 ,  40 ,   35,   35,  20 ,  40 ,  40 ,  40 ,  40  , 40  , 40  , 30  , 30  , 30  , 20  , 10  , 10 };
+		new PersonArrivalSimulator(independencia, Line.allStations.get(SubwayMap.Lines.C+"Independencia")).start(0L);
+//
+		Integer[] sanJuan = {
+//				5      6     7     8     9    10    11    12    13    14    15    16    17    18    19    20    21    22
+				10 ,  25 ,  45 ,   40,   32,  20 ,  40 ,  40 ,  40 ,  40  , 40  , 40  , 30  , 35  , 35  , 20  , 10  , 10 };
+		new PersonArrivalSimulator(sanJuan, Line.allStations.get(SubwayMap.Lines.C+"San Juan")).start(0L);
+//
+		Integer[] constitucion = {
+//				5      6     7     8     9    10    11    12    13    14    15    16    17    18    19    20    21    22
+				10 ,  25 ,  45 ,   45,   45,  20 ,  40 ,  40 ,  40 ,  40  , 40  , 30 ,  30,   30,   30,  20 , 20  , 10 };
+		new PersonArrivalSimulator(constitucion, Line.allStations.get(SubwayMap.Lines.C+"Constitucion")).start(0L);
 	}
 }
