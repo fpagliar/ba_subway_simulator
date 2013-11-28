@@ -30,9 +30,9 @@ public class LineHCreator {
 	}
 
 	public void setPopularityLineChange(){
-		h.lineChangePopularity.put(SubwayMap.Lines.B, 25);
-		h.lineChangePopularity.put(SubwayMap.Lines.A, 25);
-		h.lineChangePopularity.put(SubwayMap.Lines.E, 25);
+		h.lineChangePopularity.put(SubwayMap.Lines.B, 30);
+//		h.lineChangePopularity.put(SubwayMap.Lines.A, 10);
+		h.lineChangePopularity.put(SubwayMap.Lines.E, 10);
 	}
 
 	public void setCombinations(){
@@ -57,8 +57,36 @@ public class LineHCreator {
 		// Cuanto mas grande el numero, mas rapido llegan a la estacion!
 		Integer[] hospitales = {
 //				5      6     7     8     9    10    11    12    13    14    15    16    17    18    19    20    21    22
-				100 , 200 , 500 , 1000, 1000, 500 , 300 , 200 , 100 , 50  , 50  , 50  , 30  , 30  , 30  , 20  , 10  , 10 };
+				10 ,  10,   10,   10,   10,   10,  10 ,  10 ,  10 , 10  , 10  , 10  , 10  , 10  , 10  , 10  , 10  , 10 };
 		new PersonArrivalSimulator(hospitales, Line.allStations.get(SubwayMap.Lines.H+"Hospitales")).start(0L);
+		Integer[] patricios = {
+//				5      6     7     8     9    10    11    12    13    14    15    16    17    18    19    20    21    22
+				10 ,  10,   10,   10,   10,   10,  10 ,  10 ,  10 , 10  , 10  , 10  , 10  , 10  , 10  , 10  , 10  , 10 };
+		new PersonArrivalSimulator(patricios, Line.allStations.get(SubwayMap.Lines.H+"Parque Patricios")).start(0L);
+		Integer[] caseros = {
+//				5      6     7     8     9    10    11    12    13    14    15    16    17    18    19    20    21    22
+				10 ,  10,   10,   10,   10,   10,  10 ,  10 ,  10 , 10  , 10  , 10  , 10  , 10  , 10  , 10  , 10  , 10 };
+		new PersonArrivalSimulator(caseros, Line.allStations.get(SubwayMap.Lines.H+"Caseros")).start(0L);
+		Integer[] inclan = {
+//				5      6     7     8     9    10    11    12    13    14    15    16    17    18    19    20    21    22
+				10 ,  10,   10,   10,   10,   10,  10 ,  10 ,  10 , 10  , 10  , 10  , 10  , 10  , 10  , 10  , 10  , 10 };
+		new PersonArrivalSimulator(inclan, Line.allStations.get(SubwayMap.Lines.H+"Inclan")).start(0L);
+		Integer[] humberto = {
+//				5      6     7     8     9    10    11    12    13    14    15    16    17    18    19    20    21    22
+				10 ,  10,   10,   10,   10,   10,  10 ,  10 ,  10 , 10  , 10  , 10  , 10  , 10  , 10  , 10  , 10  , 10 };
+		new PersonArrivalSimulator(humberto, Line.allStations.get(SubwayMap.Lines.H+"Humberto 1")).start(0L);
+		Integer[] venezuela = {
+//				5      6     7     8     9    10    11    12    13    14    15    16    17    18    19    20    21    22
+				10 ,  10,   10,   10,   10,   10,  10 ,  10 ,  10 , 10  , 10  , 10  , 10  , 10  , 10  , 10  , 10  , 10 };
+		new PersonArrivalSimulator(venezuela, Line.allStations.get(SubwayMap.Lines.H+"Venezuela")).start(0L);
+		Integer[] once = {
+//				5      6     7     8     9    10    11    12    13    14    15    16    17    18    19    20    21    22
+				10 ,  10,   10,   10,   10,   10,  10 ,  10 ,  10 , 10  , 10  , 10  , 10  , 10  , 10  , 10  , 10  , 10 };
+		new PersonArrivalSimulator(once, Line.allStations.get(SubwayMap.Lines.H+"Once")).start(0L);
+		Integer[] corrientes = {
+//				5      6     7     8     9    10    11    12    13    14    15    16    17    18    19    20    21    22
+				10 ,  10,   10,   10,   10,   10,  10 ,  10 ,  10 , 10  , 10  , 10  , 10  , 10  , 10  , 10  , 10  , 10 };
+		new PersonArrivalSimulator(corrientes, Line.allStations.get(SubwayMap.Lines.H+"Corrientes")).start(0L);
 		
 	}
 }

@@ -50,10 +50,22 @@ public class SimulatorScheduler {
 	}
 
 	public void advanceTime() throws Exception {
-		if(actual_timestamp % 5 == 0){
-			SubwayMap.getInstance().setTime(actual_timestamp + 5 * 3600);
-			SubwayMap.getInstance().render();			
-		}
+//		if(actual_timestamp > (7-5)*60*60 && actual_timestamp < (10-5)*60*60){
+//			if(actual_timestamp % 3 == 0){
+//				SubwayMap.getInstance().setTime(actual_timestamp + 5 * 3600);
+//				SubwayMap.getInstance().render();			
+//			}
+//		}else if(actual_timestamp > (16-5)*60*60 && actual_timestamp < (19-5)*60*60){
+//			if(actual_timestamp % 3 == 0){
+//				SubwayMap.getInstance().setTime(actual_timestamp + 5 * 3600);
+//				SubwayMap.getInstance().render();			
+//			}
+//		}else {
+			if(actual_timestamp % 50 == 0){
+				SubwayMap.getInstance().setTime(actual_timestamp + 5 * 3600);
+				SubwayMap.getInstance().render();			
+			}			
+//		}
 		
 		Line l;
 		for(SubwayMap.Lines letter : Line.lines.keySet()) {
@@ -75,7 +87,7 @@ public class SimulatorScheduler {
 			System.out.println("TIME - " + (5 + actual_timestamp/3600) + ":" + (actual_timestamp%3600)/60 + ":" + ((actual_timestamp%3600)%60));
 			System.out.println("SIMULATION ENDED");
 			System.out.println("Operations:" + operations);
-			System.exit(0);
+//			System.exit(0);
 		}
 			
 		

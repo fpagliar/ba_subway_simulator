@@ -1,6 +1,7 @@
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.util.Random;
 
 import org.jfree.ui.RefineryUtilities;
 
@@ -171,6 +172,7 @@ public class Start {
 //		{1, 3, 5, 10, 10, 10, 10, 4, 3, 2, 1, 1, 1, 2, 3, 4, 5, 6}};
 //	static Integer[] lengthsH = { 30, 40, 50, 120, 100, 80, 30, 0 };
 //	static Integer[] frequencyH = {270, 270, 215, 215, 215, 265, 265, 265, 265, 265, 265, 215, 215, 215, 215, 270, 270, 270};
+	public static Random random = new Random(0);
 	
 	static Line[] lines;
 	/**
@@ -178,7 +180,7 @@ public class Start {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-
+		
 		SubwayMap.getInstance().start();
 		LineACreator a = new LineACreator();
 		a.create();
@@ -211,7 +213,7 @@ public class Start {
 		SubwayMap.getInstance().buildBasicGraphics();
 		
 		for (int i = 0; i < 1000000; i++) {
-			if (i % 500 == 1) {
+			if (i % 3600 == 1) {
 				generateChartGraphs();
 //				lineChart.save("lineChart" + i + ".jpg");
 //				barChart.save("barChart " + i + ".jpg");
