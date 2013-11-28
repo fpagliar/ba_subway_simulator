@@ -137,7 +137,7 @@ public class SubwayMap {
 
 		try {
 			texture = TextureLoader.getTexture("PNG", ResourceLoader
-					.getResourceAsStream("resources/mapa_estaciones2.png"));
+					.getResourceAsStream("resources/mapa_estaciones3.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
