@@ -24,7 +24,14 @@ public class LineCCreator {
 		Integer[] xaxis = { 870, 844, 821, 812, 791, 791, 791, 791, 791 };
 		Integer[] yaxis = { 137, 163, 222, 270, 319, 359, 436, 493, 575 };
 		Integer[] lengths = { 40, 70, 60, 80, 40, 100, 80, 100, 0 };
+		// 0 trenes
 		Integer[] frequency = {270, 270, 215, 215, 215, 265, 265, 265, 265, 265, 265, 215, 215, 215, 215, 270, 270, 270};		
+		// 1 tren
+//		Integer[] frequency = {270, 270, 215, 175, 175, 265, 265, 265, 265, 265, 265, 175, 175, 175, 175, 270, 270, 270};		
+		// 2 trenes
+//		Integer[] frequency = {270, 270, 215, 155, 155, 265, 265, 265, 265, 265, 265, 155, 155, 155, 155, 270, 270, 270};		
+		// 3 trenes
+//		Integer[] frequency = {270, 270, 215, 127, 127, 265, 265, 265, 265, 265, 265, 127, 127, 127, 127, 270, 270, 270};		
 		c = new Line(names, xaxis, yaxis, lengths, frequency, SubwayMap.Lines.C, popularity);
 		setPersonArrivalChance();
 		setPopularityLineChange();

@@ -50,22 +50,22 @@ public class SimulatorScheduler {
 	}
 
 	public void advanceTime() throws Exception {
-//		if(actual_timestamp > (7-5)*60*60 && actual_timestamp < (10-5)*60*60){
-//			if(actual_timestamp % 3 == 0){
-//				SubwayMap.getInstance().setTime(actual_timestamp + 5 * 3600);
-//				SubwayMap.getInstance().render();			
-//			}
-//		}else if(actual_timestamp > (16-5)*60*60 && actual_timestamp < (19-5)*60*60){
-//			if(actual_timestamp % 3 == 0){
-//				SubwayMap.getInstance().setTime(actual_timestamp + 5 * 3600);
-//				SubwayMap.getInstance().render();			
-//			}
-//		}else {
-			if(actual_timestamp % 50 == 0){
+		if(actual_timestamp > (7-5)*60*60 && actual_timestamp < (10-5)*60*60){
+			if(actual_timestamp % 5 == 0){
+				SubwayMap.getInstance().setTime(actual_timestamp + 5 * 3600);
+				SubwayMap.getInstance().render();			
+			}
+		}else if(actual_timestamp > (16-5)*60*60 && actual_timestamp < (19-5)*60*60){
+			if(actual_timestamp % 5 == 0){
+				SubwayMap.getInstance().setTime(actual_timestamp + 5 * 3600);
+				SubwayMap.getInstance().render();			
+			}
+		}else {
+			if(actual_timestamp % 20 == 0){
 				SubwayMap.getInstance().setTime(actual_timestamp + 5 * 3600);
 				SubwayMap.getInstance().render();			
 			}			
-//		}
+		}
 		
 		Line l;
 		for(SubwayMap.Lines letter : Line.lines.keySet()) {

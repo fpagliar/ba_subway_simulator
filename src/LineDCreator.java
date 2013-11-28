@@ -37,7 +37,14 @@ public class LineDCreator {
 		Integer[] lengths = { 100, 65, 80, 95, 110, 80, 80, 65, 65, 70, 115,
 			65, 90, 65, 60, 0 };
 		// frecuencias, por hora, desde las 5 hasta las 23
+		// 0 trenes
 		Integer[] frequency = {300, 300, 190, 175, 175, 210, 210, 210, 210, 210, 210, 175, 175, 195, 195, 320, 320, 320};
+		// 1 tren
+//		Integer[] frequency = {300, 300, 190, 160, 160, 210, 210, 210, 210, 210, 210, 160, 160, 195, 195, 320, 320, 320};
+		// 2 trenes
+//		Integer[] frequency = {300, 300, 190, 147, 147, 210, 210, 210, 210, 210, 210, 147, 147, 195, 195, 320, 320, 320};
+		// 3 trenes
+//		Integer[] frequency = {300, 300, 190, 136, 136, 210, 210, 210, 210, 210, 210, 136, 136, 195, 195, 320, 320, 320};
 		d = new Line(names, xaxis, yaxis, lengths, frequency, SubwayMap.Lines.D, popularity);
 		setPersonArrivalChance();
 		setPopularityLineChange();
