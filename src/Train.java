@@ -19,6 +19,7 @@ public class Train implements SimulatorObject {
 	private float y;
 	private Line line;
 	private Station start;
+	private boolean lastTrain;
 	
 	public Train(String name, Line line, Station start, Direction direction){
 		this.name = name;
@@ -104,6 +105,14 @@ public class Train implements SimulatorObject {
 		return this.line;
 	}
 
+	public void lastTrain(){
+		this.lastTrain = true;
+	}
+	
+	public boolean isLastTrain(){
+		return lastTrain;
+	}
+	
 	@Override
 	public void event(Long timestamp) throws Exception {
 		SubwayMap.getInstance().addTrain(this);

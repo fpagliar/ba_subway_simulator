@@ -12,6 +12,7 @@ public class Station extends SubwaySpace {
 	private Line line;
 	private Integer[] popularity;
 	public Integer chosen = 0;
+	private boolean lastTrainToEndPassed, lastTrainToStartPassed;
 
 	public Station(SubwaySpace nextToStart, SubwaySpace nextToEnd, Line line, long waitingDuration, String name, float x, float y, Integer[] popularity) {
 		super(nextToStart, nextToEnd, waitingDuration, name, x, y);
@@ -30,10 +31,13 @@ public class Station extends SubwaySpace {
 			makeCombination(p);
 			return;
 		}
-		if (line.getDirection(this, p.getDestiny()).equals(Train.Direction.TO_END))
-			passangersToEnd.add(p);
-		else
-			passangersToStart.add(p);
+		if (line.getDirection(this, p.getDestiny()).equals(Train.Direction.TO_END)){
+			if(! lastTrainToEndPassed)
+				passangersToEnd.add(p);
+		}else{
+			if(! lastTrainToStartPassed)
+				passangersToStart.add(p);
+		}
 	}
 
 	public int getPersonsWaiting(Train.Direction direction) {
@@ -45,6 +49,14 @@ public class Station extends SubwaySpace {
 	@Override
 	public void trainArrival(Train train, Long timestamp) throws Exception {
 		train.setPosition(getX(), getY());
+		
+//		System.out.println("train:" + train);
+//		System.out.println("bool:" + train.isLastTrain());
+		if(train.isLastTrain())
+			if(train.getDirection().equals(Train.Direction.TO_END))
+				lastTrainToEndPassed = true;
+			else
+				lastTrainToStartPassed = true;
 		
 		// if I have a pending event this moment, first execute it in order to
 		// free the space for the new train

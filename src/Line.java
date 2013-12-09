@@ -112,14 +112,20 @@ public class Line {
 	
 	private void loadTrains() throws Exception{
 		int lastTrain = 0;
+		Train lastToStart = null, lastToEnd = null;
 		for(int i = 0; i < frequency.length; i++)
 			for(int j = getAppropiateStartJ(lastTrain, i, frequency); j < 3600; j+= frequency[i]){
 				// although may seem obvious, it is important to keep in mind. When loading trains on START-STATION
 				// the direction should be TO_END!!
-				SimulatorScheduler.getInstance().registerEvent((long)j + i * 3600, new SchedulerRegistrator( new Train(getLineLetter() + ": start - " + i + ":" + j/60 + ":" + j%60, this, getStart(), Train.Direction.TO_END), "Train is going to start its trip"));
-				SimulatorScheduler.getInstance().registerEvent((long)j + i * 3600, new SchedulerRegistrator( new Train(getLineLetter() + ": end - " + i + ":" + j/60 + ":" + j%60, this, getEnd(), Train.Direction.TO_START), "Train is going to start its trip"));
+				lastToStart = new Train(getLineLetter() + ": end - " + i + ":" + j/60 + ":" + j%60, this, getEnd(), Train.Direction.TO_START);
+				lastToEnd = new Train(getLineLetter() + ": start - " + i + ":" + j/60 + ":" + j%60, this, getStart(), Train.Direction.TO_END);
+						
+				SimulatorScheduler.getInstance().registerEvent((long)j + i * 3600, new SchedulerRegistrator( lastToEnd, "Train is going to start its trip"));
+				SimulatorScheduler.getInstance().registerEvent((long)j + i * 3600, new SchedulerRegistrator( lastToStart, "Train is going to start its trip"));
 				lastTrain = j + i * 3600;
 			}
+		lastToStart.lastTrain();
+		lastToEnd.lastTrain();
 	}
 	
 	private int getAppropiateStartJ(int lastTrain, int i, Integer[] frequency){

@@ -172,7 +172,7 @@ public class Start {
 //		{1, 3, 5, 10, 10, 10, 10, 4, 3, 2, 1, 1, 1, 2, 3, 4, 5, 6}};
 //	static Integer[] lengthsH = { 30, 40, 50, 120, 100, 80, 30, 0 };
 //	static Integer[] frequencyH = {270, 270, 215, 215, 215, 265, 265, 265, 265, 265, 265, 215, 215, 215, 215, 270, 270, 270};
-	public static Random random = new Random(0);
+	public static Random random = new Random(1);
 	
 	static Line[] lines;
 	/**

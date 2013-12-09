@@ -87,6 +87,7 @@ public class SimulatorScheduler {
 			System.out.println("TIME - " + (5 + actual_timestamp/3600) + ":" + (actual_timestamp%3600)/60 + ":" + ((actual_timestamp%3600)%60));
 			System.out.println("SIMULATION ENDED");
 			System.out.println("Operations:" + operations);
+			return;
 //			System.exit(0);
 		}
 			
