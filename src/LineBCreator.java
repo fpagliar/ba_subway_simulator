@@ -132,22 +132,22 @@ public class LineBCreator {
 
 		Integer[] pasteur = {
 //				5      6     7     8     9    10    11    12    13    14    15    16    17    18    19    20    21    22
-				10 ,  15 ,  25 ,  30,   30,   40 ,  40 ,  40 ,  40 ,  40  , 40  , 40  , 50 ,  50 ,  50  , 40  , 20  , 10 };
+				10 ,  15 ,  25 ,  30,   30,   40 ,  40 ,  40 ,  40 ,  40  , 40  , 40  , 50 ,  50 ,  50  , 30  , 20  , 10 };
 		new PersonArrivalSimulator(pasteur, Line.allStations.get(SubwayMap.Lines.B+"Pasteur")).start(0L);
 
 		Integer[] callao = {
 //				5      6     7     8     9    10    11    12    13    14    15    16    17    18    19    20    21    22
-				10 ,  15 ,  25 ,   30,   30,  30 ,  40 ,  40 ,  40 ,  40  , 50  , 50  , 80  ,75  ,75  , 50  , 20  , 10 };
+				10 ,  15 ,  25 ,   30,   30,  30 ,  40 ,  40 ,  40 ,  40  , 50  , 50  , 80  ,75  ,75  , 45  , 20  , 10 };
 		new PersonArrivalSimulator(callao, Line.allStations.get(SubwayMap.Lines.B+"Callao")).start(0L);
 
 		Integer[] uruguay = {
 //				5      6     7     8     9    10    11    12    13    14    15    16    17    18    19    20    21    22
-				10 ,  15 ,  25 ,   35,   35,  20 ,  40 ,  40 ,  40 ,  40  , 50  , 50  , 90 , 90  , 90  , 70  , 30  , 10 };
+				10 ,  15 ,  25 ,   35,   35,  20 ,  40 ,  40 ,  40 ,  40  , 50  , 50  , 90 , 90  , 80  , 60  , 30  , 10 };
 		new PersonArrivalSimulator(uruguay, Line.allStations.get(SubwayMap.Lines.B+"Uruguay")).start(0L);
 
 		Integer[] carlosPellegrini = {
 //				5      6     7     8     9    10    11    12    13    14    15    16    17    18    19    20    21    22
-				10 ,  15 ,  25 ,   35,   35,  20 ,  40 ,  40 ,  40 ,  40  , 45  , 55  , 100,   100,  100 , 80  , 50  , 10 };
+				10 ,  15 ,  25 ,   35,   35,  20 ,  40 ,  40 ,  40 ,  40  , 45  , 55  , 100,   100,  90 , 70  , 50  , 10 };
 		new PersonArrivalSimulator(carlosPellegrini, Line.allStations.get(SubwayMap.Lines.B+"Carlos Pellegrini")).start(0L);
 
 		Integer[] florida = {

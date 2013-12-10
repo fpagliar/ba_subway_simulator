@@ -19,6 +19,10 @@ public class SimulatorScheduler {
 		operations = 0;
 	}
 
+	public static void restart(){
+		instance = new SimulatorScheduler();
+	}
+
 	public static SimulatorScheduler getInstance() {
 		return instance;
 	}
@@ -55,7 +59,7 @@ public class SimulatorScheduler {
 				SubwayMap.getInstance().setTime(actual_timestamp + 5 * 3600);
 				SubwayMap.getInstance().render();			
 			}
-		}else if(actual_timestamp > (16-5)*60*60 && actual_timestamp < (19-5)*60*60){
+		}else if(actual_timestamp > (17-5)*60*60 && actual_timestamp < (20-5)*60*60){
 			if(actual_timestamp % 5 == 0){
 				SubwayMap.getInstance().setTime(actual_timestamp + 5 * 3600);
 				SubwayMap.getInstance().render();			
@@ -83,10 +87,12 @@ public class SimulatorScheduler {
 			actual_timestamp++;
 		}
 		
-		if(actual_timestamp > 61200){
+//		if(actual_timestamp > 61200){
+		if(actual_timestamp >= (23-5)*60*60){
 			System.out.println("TIME - " + (5 + actual_timestamp/3600) + ":" + (actual_timestamp%3600)/60 + ":" + ((actual_timestamp%3600)%60));
 			System.out.println("SIMULATION ENDED");
 			System.out.println("Operations:" + operations);
+			System.out.println("Transported people:" + Person.getPeople());
 			return;
 //			System.exit(0);
 		}

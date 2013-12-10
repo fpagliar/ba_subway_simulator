@@ -36,8 +36,6 @@ public class Person {
 	private static void incPeople(){
 		totalPeople++;
 		actualPeople++;
-		if(totalPeople %10000 == 0)
-			System.out.println("people ->" + totalPeople);
 	}
 	
 	public static long getPeople() {

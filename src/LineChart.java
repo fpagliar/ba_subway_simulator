@@ -22,7 +22,7 @@ import org.jfree.ui.ApplicationFrame;
 @SuppressWarnings("serial")
 public class LineChart extends ApplicationFrame {
 
-	private List<Point> totalPoints = null;
+//	private List<Point> totalPoints = null;
 	private List<Point> actualPoints = null;
 
 	private XYDataset dataset;
@@ -31,17 +31,19 @@ public class LineChart extends ApplicationFrame {
 
 	public LineChart(final String title) {
 		super(title);
-		totalPoints = new ArrayList<Point>();
+//		totalPoints = new ArrayList<Point>();
 		actualPoints = new ArrayList<Point>();
 		refresh();
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
 	public void refresh() {
-		totalPoints.add(new Point((int) SimulatorScheduler.getInstance()
-				.getTime(), (int)Person.getPeople()));
-		actualPoints.add(new Point((int) SimulatorScheduler.getInstance()
-				.getTime(), (int)Person.getActualPeople()));
+//		totalPoints.add(new Point((int) SimulatorScheduler.getInstance()
+//				.getTime(), (int)Person.getPeople()));
+//		actualPoints.add(new Point((int) SimulatorScheduler.getInstance()
+//				.getTime(), (int)Person.getActualPeople()));
+		int time = (int) SimulatorScheduler.getInstance().getTime()/3600 + 5;
+		actualPoints.add(new Point(time, (int)Person.getActualPeople()));
 		dataset = createDataset();
 		chart = createChart(dataset);
 		chartPanel = new ChartPanel(chart);
@@ -53,8 +55,8 @@ public class LineChart extends ApplicationFrame {
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		XYSeries total = new XYSeries("Total");
 		XYSeries actual = new XYSeries("Actual");
-		for (Point p : totalPoints)
-			total.add(p.x, p.y);
+//		for (Point p : totalPoints)
+//			total.add(p.x, p.y);
 		for (Point p : actualPoints)
 			actual.add(p.x, p.y);
 		dataset.addSeries(total);

@@ -117,12 +117,14 @@ public class Line {
 			for(int j = getAppropiateStartJ(lastTrain, i, frequency); j < 3600; j+= frequency[i]){
 				// although may seem obvious, it is important to keep in mind. When loading trains on START-STATION
 				// the direction should be TO_END!!
-				lastToStart = new Train(getLineLetter() + ": end - " + i + ":" + j/60 + ":" + j%60, this, getEnd(), Train.Direction.TO_START);
-				lastToEnd = new Train(getLineLetter() + ": start - " + i + ":" + j/60 + ":" + j%60, this, getStart(), Train.Direction.TO_END);
-						
-				SimulatorScheduler.getInstance().registerEvent((long)j + i * 3600, new SchedulerRegistrator( lastToEnd, "Train is going to start its trip"));
-				SimulatorScheduler.getInstance().registerEvent((long)j + i * 3600, new SchedulerRegistrator( lastToStart, "Train is going to start its trip"));
-				lastTrain = j + i * 3600;
+				if(i < (frequency.length - 1) || (j + getTripTime() < 3600)){
+					lastToStart = new Train(getLineLetter() + ": end - " + i + ":" + j/60 + ":" + j%60, this, getEnd(), Train.Direction.TO_START);
+					lastToEnd = new Train(getLineLetter() + ": start - " + i + ":" + j/60 + ":" + j%60, this, getStart(), Train.Direction.TO_END);
+					
+					SimulatorScheduler.getInstance().registerEvent((long)j + i * 3600, new SchedulerRegistrator( lastToEnd, "Train is going to start its trip"));
+					SimulatorScheduler.getInstance().registerEvent((long)j + i * 3600, new SchedulerRegistrator( lastToStart, "Train is going to start its trip"));
+					lastTrain = j + i * 3600;
+				}
 			}
 		lastToStart.lastTrain();
 		lastToEnd.lastTrain();
@@ -175,5 +177,12 @@ public class Line {
 
 	public void setTotalHoursWaiting(long totalHoursWaiting) {
 		this.totalHoursWaiting = totalHoursWaiting;
+	}
+	
+	public long getTripTime(){
+		long ans = 40;
+		for(Integer length: lengths)
+			ans = ans + length + 40;
+		return ans;
 	}
 }

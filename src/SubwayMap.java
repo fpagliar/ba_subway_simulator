@@ -58,6 +58,10 @@ public class SubwayMap {
 		}
 		return subwayMap;
 	}
+	
+	public static void restart(){
+		subwayMap = null;
+	}
 
 	private SubwayMap() throws SlickException {
 		graphics = new Graphics();
@@ -289,6 +293,25 @@ public class SubwayMap {
 		return passengersNotLoadedH;
 	}
 
+	public int getPassengersNotLoaded(Lines line) throws Exception{
+		switch (line) {
+		case A:
+			return passengersNotLoadedA;
+		case B:
+			return passengersNotLoadedB;
+		case C:
+			return passengersNotLoadedC;
+		case D:
+			return passengersNotLoadedD;
+		case E:
+			return passengersNotLoadedE;
+		case H:
+			return passengersNotLoadedH;
+		default:
+			throw new Exception("la cague");
+		}
+	}
+	
 	public void setTime(long time) {
 		this.time = time;
 	}
